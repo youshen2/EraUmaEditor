@@ -1,0 +1,24 @@
+<resources>
+    <style name="Theme.EraUmaEditor" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="materialCardViewStyle">@style/Widget.EraUmaEditor.CardView</item>
+    </style>
+
+    <style name="Widget.EraUmaEditor.CardView" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardElevation">0dp</item>
+        <item name="android:elevation">0dp</item>
+
+        <item name="strokeColor">?attr/colorSurfaceContainer</item>
+        <item name="strokeWidth">2dp</item>
+
+        <item name="cardBackgroundColor">?attr/colorSurface</item>
+    </style>
+    <style name="ExpandedTitleTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="CollapsedTitleTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+</resources>

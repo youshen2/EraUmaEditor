@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">UmaEra 存档修改器</string>
+    <string name="current_file">已加载存档文件</string>
+    <string name="file_version">存档版本</string>
+    <string name="title_global">全局数据</string>
+    <string name="title_item">持有物品</string>
+    <string name="title_character">角色数据</string>
+    <string name="title_overview">概览</string>
+    <string name="empty_save">请先加载一个存档文件</string>
+</resources>
