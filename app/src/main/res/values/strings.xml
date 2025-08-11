@@ -8,4 +8,9 @@
     <string name="title_overview">概览</string>
     <string name="empty_save">请先加载一个存档文件</string>
     <string name="title_attr">属性</string>
+    <string name="title_ability">能力</string>
+    <string name="title_exp">经验</string>
+    <string name="title_ex">性爱状态</string>
+    <string name="title_callname">称呼</string>
+    <string name="title_info">信息</string>
 </resources>

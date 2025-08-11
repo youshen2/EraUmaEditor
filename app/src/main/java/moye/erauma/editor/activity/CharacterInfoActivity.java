@@ -13,11 +13,11 @@ import androidx.transition.Fade;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import moye.erauma.editor.R;
+import moye.erauma.editor.fragment.characterInfo.AbilityFragment;
 import moye.erauma.editor.fragment.characterInfo.AttrFragment;
-import moye.erauma.editor.fragment.main.CharacterFragment;
-import moye.erauma.editor.fragment.main.GlobalFragment;
-import moye.erauma.editor.fragment.main.ItemFragment;
-import moye.erauma.editor.fragment.main.OverviewFragment;
+import moye.erauma.editor.fragment.characterInfo.CallnameFragment;
+import moye.erauma.editor.fragment.characterInfo.ExFragment;
+import moye.erauma.editor.fragment.characterInfo.ExpFragment;
 
 public class CharacterInfoActivity extends AppCompatActivity {
 
@@ -38,6 +38,14 @@ public class CharacterInfoActivity extends AppCompatActivity {
 
             if (itemId == R.id.nav_attr) {
                 selectedFragment = new AttrFragment();
+            }else if (itemId == R.id.nav_ability) {
+                selectedFragment = new AbilityFragment();
+            }else if (itemId == R.id.nav_exp) {
+                selectedFragment = new ExpFragment();
+            }else if (itemId == R.id.nav_ex) {
+                selectedFragment = new ExFragment();
+            }else if (itemId == R.id.nav_callname) {
+                selectedFragment = new CallnameFragment();
             }
 
             if (selectedFragment != null) {

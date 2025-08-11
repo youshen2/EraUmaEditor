@@ -4,4 +4,20 @@
         android:id="@+id/nav_attr"
         android:icon="@drawable/ic_overview"
         android:title="@string/title_attr" />
+    <item
+        android:id="@+id/nav_callname"
+        android:icon="@drawable/ic_callname"
+        android:title="@string/title_callname" />
+    <item
+        android:id="@+id/nav_ability"
+        android:icon="@drawable/ic_ability"
+        android:title="@string/title_ability" />
+    <item
+        android:id="@+id/nav_exp"
+        android:icon="@drawable/ic_exp"
+        android:title="@string/title_exp" />
+    <item
+        android:id="@+id/nav_ex"
+        android:icon="@drawable/ic_ex"
+        android:title="@string/title_ex" />
 </menu>

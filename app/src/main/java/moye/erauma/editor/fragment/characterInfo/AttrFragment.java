@@ -15,6 +15,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.appbar.MaterialToolbar;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import moye.erauma.editor.EraUmaEditor;
@@ -104,6 +105,25 @@ public class AttrFragment extends Fragment {
                 .build());
         items.add(new EditorItem.Builder("最大智力", "maxbase/{id}/9", EditorItem.DataType.FLOAT)
                 .setLayoutType(EditorItem.LayoutType.DOUBLE)
+                .build());
+
+        items.add(EditorItem.createHeader("爱慕数值"));
+        items.add(new EditorItem.Builder("好感度", "mark/{id}/0", EditorItem.DataType.FLOAT)
+                .setLayoutType(EditorItem.LayoutType.DOUBLE)
+                .build());
+        items.add(new EditorItem.Builder("爱慕", "love/{id}", EditorItem.DataType.FLOAT)
+                .setLayoutType(EditorItem.LayoutType.DOUBLE)
+                .build());
+
+        items.add(EditorItem.createHeader("角色信息"));
+        items.add(new EditorItem.Builder("阴茎尺寸", "cflag/{id}/4", EditorItem.DataType.INT)
+                .setLayoutType(EditorItem.LayoutType.DOUBLE)
+                .setChoices(Arrays.asList(
+                        new EditorItem.Choice(0, "小杯"),
+                        new EditorItem.Choice(1, "中杯"),
+                        new EditorItem.Choice(2, "大杯"),
+                        new EditorItem.Choice(3, "特大杯")
+                ))
                 .build());
     }
 
