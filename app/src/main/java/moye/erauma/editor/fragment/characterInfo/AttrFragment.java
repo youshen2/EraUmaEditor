@@ -106,6 +106,16 @@ public class AttrFragment extends Fragment {
         items.add(new EditorItem.Builder("最大智力", "maxbase/{id}/9", EditorItem.DataType.FLOAT)
                 .setLayoutType(EditorItem.LayoutType.DOUBLE)
                 .build());
+        items.add(new EditorItem.Builder("干劲", "cflag/{id}/40", EditorItem.DataType.CHOICE)
+                .setChoices(Arrays.asList(
+                        new EditorItem.Choice(-2, "极差"),
+                        new EditorItem.Choice(-1, "较差"),
+                        new EditorItem.Choice(0, "一般"),
+                        new EditorItem.Choice(1, "较佳"),
+                        new EditorItem.Choice(2, "极佳")
+                ))
+                .build());
+
 
         items.add(EditorItem.createHeader("爱慕数值"));
         items.add(new EditorItem.Builder("好感度", "mark/{id}/0", EditorItem.DataType.FLOAT)
@@ -115,14 +125,152 @@ public class AttrFragment extends Fragment {
                 .setLayoutType(EditorItem.LayoutType.DOUBLE)
                 .build());
 
-        items.add(EditorItem.createHeader("角色信息"));
-        items.add(new EditorItem.Builder("阴茎尺寸", "cflag/{id}/4", EditorItem.DataType.INT)
+        items.add(EditorItem.createHeader("适应性"));
+        items.add(new EditorItem.Builder("草地", "cflag/{id}/30", EditorItem.DataType.CHOICE)
                 .setLayoutType(EditorItem.LayoutType.DOUBLE)
                 .setChoices(Arrays.asList(
-                        new EditorItem.Choice(0, "小杯"),
-                        new EditorItem.Choice(1, "中杯"),
-                        new EditorItem.Choice(2, "大杯"),
-                        new EditorItem.Choice(3, "特大杯")
+                        new EditorItem.Choice(0, "G"),
+                        new EditorItem.Choice(1, "F"),
+                        new EditorItem.Choice(2, "E"),
+                        new EditorItem.Choice(3, "D"),
+                        new EditorItem.Choice(4, "C"),
+                        new EditorItem.Choice(5, "B"),
+                        new EditorItem.Choice(6, "A"),
+                        new EditorItem.Choice(7, "S")
+                ))
+                .build());
+        items.add(new EditorItem.Builder("泥地", "cflag/{id}/31", EditorItem.DataType.CHOICE)
+                .setLayoutType(EditorItem.LayoutType.DOUBLE)
+                .setChoices(Arrays.asList(
+                        new EditorItem.Choice(0, "G"),
+                        new EditorItem.Choice(1, "F"),
+                        new EditorItem.Choice(2, "E"),
+                        new EditorItem.Choice(3, "D"),
+                        new EditorItem.Choice(4, "C"),
+                        new EditorItem.Choice(5, "B"),
+                        new EditorItem.Choice(6, "A"),
+                        new EditorItem.Choice(7, "S")
+                ))
+                .build());
+        items.add(new EditorItem.Builder("短距离", "cflag/{id}/32", EditorItem.DataType.CHOICE)
+                .setLayoutType(EditorItem.LayoutType.DOUBLE)
+                .setChoices(Arrays.asList(
+                        new EditorItem.Choice(0, "G"),
+                        new EditorItem.Choice(1, "F"),
+                        new EditorItem.Choice(2, "E"),
+                        new EditorItem.Choice(3, "D"),
+                        new EditorItem.Choice(4, "C"),
+                        new EditorItem.Choice(5, "B"),
+                        new EditorItem.Choice(6, "A"),
+                        new EditorItem.Choice(7, "S")
+                ))
+                .build());
+        items.add(new EditorItem.Builder("英里", "cflag/{id}/33", EditorItem.DataType.CHOICE)
+                .setLayoutType(EditorItem.LayoutType.DOUBLE)
+                .setChoices(Arrays.asList(
+                        new EditorItem.Choice(0, "G"),
+                        new EditorItem.Choice(1, "F"),
+                        new EditorItem.Choice(2, "E"),
+                        new EditorItem.Choice(3, "D"),
+                        new EditorItem.Choice(4, "C"),
+                        new EditorItem.Choice(5, "B"),
+                        new EditorItem.Choice(6, "A"),
+                        new EditorItem.Choice(7, "S")
+                ))
+                .build());
+        items.add(new EditorItem.Builder("中距离", "cflag/{id}/34", EditorItem.DataType.CHOICE)
+                .setLayoutType(EditorItem.LayoutType.DOUBLE)
+                .setChoices(Arrays.asList(
+                        new EditorItem.Choice(0, "G"),
+                        new EditorItem.Choice(1, "F"),
+                        new EditorItem.Choice(2, "E"),
+                        new EditorItem.Choice(3, "D"),
+                        new EditorItem.Choice(4, "C"),
+                        new EditorItem.Choice(5, "B"),
+                        new EditorItem.Choice(6, "A"),
+                        new EditorItem.Choice(7, "S")
+                ))
+                .build());
+        items.add(new EditorItem.Builder("长距离", "cflag/{id}/35", EditorItem.DataType.CHOICE)
+                .setLayoutType(EditorItem.LayoutType.DOUBLE)
+                .setChoices(Arrays.asList(
+                        new EditorItem.Choice(0, "G"),
+                        new EditorItem.Choice(1, "F"),
+                        new EditorItem.Choice(2, "E"),
+                        new EditorItem.Choice(3, "D"),
+                        new EditorItem.Choice(4, "C"),
+                        new EditorItem.Choice(5, "B"),
+                        new EditorItem.Choice(6, "A"),
+                        new EditorItem.Choice(7, "S")
+                ))
+                .build());
+        items.add(new EditorItem.Builder("逃马", "cflag/{id}/36", EditorItem.DataType.CHOICE)
+                .setLayoutType(EditorItem.LayoutType.DOUBLE)
+                .setChoices(Arrays.asList(
+                        new EditorItem.Choice(0, "G"),
+                        new EditorItem.Choice(1, "F"),
+                        new EditorItem.Choice(2, "E"),
+                        new EditorItem.Choice(3, "D"),
+                        new EditorItem.Choice(4, "C"),
+                        new EditorItem.Choice(5, "B"),
+                        new EditorItem.Choice(6, "A"),
+                        new EditorItem.Choice(7, "S")
+                ))
+                .build());
+        items.add(new EditorItem.Builder("先马", "cflag/{id}/37", EditorItem.DataType.CHOICE)
+                .setLayoutType(EditorItem.LayoutType.DOUBLE)
+                .setChoices(Arrays.asList(
+                        new EditorItem.Choice(0, "G"),
+                        new EditorItem.Choice(1, "F"),
+                        new EditorItem.Choice(2, "E"),
+                        new EditorItem.Choice(3, "D"),
+                        new EditorItem.Choice(4, "C"),
+                        new EditorItem.Choice(5, "B"),
+                        new EditorItem.Choice(6, "A"),
+                        new EditorItem.Choice(7, "S")
+                ))
+                .build());
+        items.add(new EditorItem.Builder("差马", "cflag/{id}/38", EditorItem.DataType.CHOICE)
+                .setLayoutType(EditorItem.LayoutType.DOUBLE)
+                .setChoices(Arrays.asList(
+                        new EditorItem.Choice(0, "G"),
+                        new EditorItem.Choice(1, "F"),
+                        new EditorItem.Choice(2, "E"),
+                        new EditorItem.Choice(3, "D"),
+                        new EditorItem.Choice(4, "C"),
+                        new EditorItem.Choice(5, "B"),
+                        new EditorItem.Choice(6, "A"),
+                        new EditorItem.Choice(7, "S")
+                ))
+                .build());
+        items.add(new EditorItem.Builder("追马", "cflag/{id}/39", EditorItem.DataType.CHOICE)
+                .setLayoutType(EditorItem.LayoutType.DOUBLE)
+                .setChoices(Arrays.asList(
+                        new EditorItem.Choice(0, "G"),
+                        new EditorItem.Choice(1, "F"),
+                        new EditorItem.Choice(2, "E"),
+                        new EditorItem.Choice(3, "D"),
+                        new EditorItem.Choice(4, "C"),
+                        new EditorItem.Choice(5, "B"),
+                        new EditorItem.Choice(6, "A"),
+                        new EditorItem.Choice(7, "S")
+                ))
+                .build());
+        items.add(EditorItem.createHeader("角色信息"));
+        items.add(new EditorItem.Builder("性别", "cflag/{id}/0", EditorItem.DataType.CHOICE)
+                .setChoices(Arrays.asList(
+                        new EditorItem.Choice(0, "女性"),
+                        new EditorItem.Choice(1, "男性"),
+                        new EditorItem.Choice(2, "扶她")
+                ))
+                .build());
+        items.add(new EditorItem.Builder("阴茎尺寸", "cflag/{id}/4", EditorItem.DataType.CHOICE)
+                .setChoices(Arrays.asList(
+                        new EditorItem.Choice(1, "可怜"),
+                        new EditorItem.Choice(2, "寒酸"),
+                        new EditorItem.Choice(3, "健壮"),
+                        new EditorItem.Choice(4, "凶恶"),
+                        new EditorItem.Choice(5, "骇人")
                 ))
                 .build());
     }
