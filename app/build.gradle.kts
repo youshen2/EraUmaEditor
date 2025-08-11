@@ -13,9 +13,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+        resConfigs("zh")
     }
 
     buildTypes {
@@ -41,9 +39,4 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.lifecycle:lifecycle-viewmodel:2.7.0")
-    implementation("androidx.lifecycle:lifecycle-livedata:2.7.0")
-    implementation("androidx.activity:activity:1.8.2")
-    implementation("androidx.navigation:navigation-fragment:2.7.7")
-    implementation("androidx.navigation:navigation-ui:2.7.7")
 }

@@ -1,5 +1,7 @@
 package moye.erauma.editor.fragment.main;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -11,12 +13,14 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.google.android.material.card.MaterialCardView;
 
 import moye.erauma.editor.R;
 import moye.erauma.editor.ui.BgEffectPainter;
@@ -45,6 +49,8 @@ public class AboutFragment extends Fragment {
         setupClickListeners(view);
 
         initializeBackgroundEffect(view);
+
+        startEntryAnimation(view);
     }
 
     @Override
@@ -86,6 +92,45 @@ public class AboutFragment extends Fragment {
             startTime = System.nanoTime();
             animationHandler.post(runnableBgEffect);
         });
+    }
+
+    private void startEntryAnimation(View view) {
+        View headerContent = view.findViewById(R.id.header_content);
+        MaterialCardView aboutCard = view.findViewById(R.id.about_card);
+
+        headerContent.setTranslationY(-300f);
+        headerContent.setAlpha(0f);
+
+        aboutCard.setTranslationY(300f);
+        aboutCard.setAlpha(0f);
+
+        headerContent.animate()
+                .translationY(0f)
+                .alpha(1f)
+                .setInterpolator(new DecelerateInterpolator(1.5f))
+                .setDuration(600)
+                .start();
+
+        aboutCard.animate()
+                .translationY(0f)
+                .alpha(0.6f)
+                .setInterpolator(new DecelerateInterpolator(1.5f))
+                .setDuration(600)
+                .setStartDelay(200)
+                .start();
+    }
+
+    private void animateListItems(View... views) {
+        for (int i = 0; i < views.length; i++) {
+            View view = views[i];
+            view.setAlpha(0f);
+            view.animate()
+                    .alpha(1f)
+                    .setDuration(400)
+                    .setStartDelay(i * 100)
+                    .setInterpolator(new DecelerateInterpolator())
+                    .start();
+        }
     }
 
     private void setupClickListeners(View view) {

@@ -14,6 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EraUmaEditor"
         android:hardwareAccelerated="true"
+        android:icon="@drawable/ic_launcher"
         tools:targetApi="31">
         <activity
             android:name=".activity.MainActivity"
