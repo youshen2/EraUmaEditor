@@ -15,10 +15,11 @@
             app:collapsedTitleTextAppearance="@style/CollapsedTitleTextAppearance"
             app:expandedTitleTextAppearance="@style/ExpandedTitleTextAppearance"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:title="@string/title_item"
+            app:title="@string/title_character"
             app:titleEnabled="true">
 
             <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/collapsing_appbar"
                 style="@style/Widget.Material3.Toolbar.Surface"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"

@@ -13,19 +13,20 @@ import androidx.transition.Fade;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import moye.erauma.editor.R;
+import moye.erauma.editor.fragment.characterInfo.AttrFragment;
 import moye.erauma.editor.fragment.main.CharacterFragment;
 import moye.erauma.editor.fragment.main.GlobalFragment;
 import moye.erauma.editor.fragment.main.ItemFragment;
 import moye.erauma.editor.fragment.main.OverviewFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class CharacterInfoActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNav;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_actor_info);
 
         bottomNav = findViewById(R.id.bottom_navigation);
 
@@ -35,14 +36,8 @@ public class MainActivity extends AppCompatActivity {
             Fragment selectedFragment = null;
             int itemId = item.getItemId();
 
-            if (itemId == R.id.nav_overview) {
-                selectedFragment = new OverviewFragment();
-            } else if (itemId == R.id.nav_character) {
-                selectedFragment = new CharacterFragment();
-            } else if (itemId == R.id.nav_item) {
-                selectedFragment = new ItemFragment();
-            } else if (itemId == R.id.nav_global) {
-                selectedFragment = new GlobalFragment();
+            if (itemId == R.id.nav_attr) {
+                selectedFragment = new AttrFragment();
             }
 
             if (selectedFragment != null) {
@@ -56,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-        bottomNav.setSelectedItemId(R.id.nav_overview);
+        bottomNav.setSelectedItemId(R.id.nav_attr);
     }
 
     private void setupKeyboardListener() {

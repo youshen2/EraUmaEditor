@@ -7,4 +7,5 @@
     <string name="title_character">角色数据</string>
     <string name="title_overview">概览</string>
     <string name="empty_save">请先加载一个存档文件</string>
+    <string name="title_attr">属性</string>
 </resources>

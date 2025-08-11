@@ -1,4 +1,4 @@
-package moye.erauma.editor.fragment;
+package moye.erauma.editor.fragment.main;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,10 +11,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -33,13 +34,14 @@ public class ItemFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_item, container, false);
+        rootView = inflater.inflate(R.layout.fragment_info, container, false);
         return rootView;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ((CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar)).setTitle(getResources().getString(R.string.title_item));
 
         recyclerView = view.findViewById(R.id.recyclerView);
 

@@ -2,6 +2,9 @@
 
     <style name="Theme.EraUmaEditor" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="materialCardViewStyle">@style/Widget.EraUmaEditor.CardView</item>
+        <item name="android:windowEnterAnimation">@anim/zoom_in</item>
+        <item name="android:windowExitAnimation">@anim/zoom_out</item>
+        <item name="android:windowAnimationStyle">@style/CustomWindowAnimations</item>
     </style>
 
     <style name="Widget.EraUmaEditor.CardView" parent="Widget.Material3.CardView.Elevated">
@@ -22,5 +25,13 @@
     <style name="CollapsedTitleTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textSize">22sp</item>
         <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="CustomWindowAnimations" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/zoom_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/zoom_out</item>
+
+        <item name="android:activityCloseEnterAnimation">@anim/zoom_in_out</item>
+        <item name="android:activityCloseExitAnimation">@anim/zoom_out_in</item>
     </style>
 </resources>

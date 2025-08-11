@@ -1,4 +1,4 @@
-package moye.erauma.editor.fragment;
+package moye.erauma.editor.fragment.main;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -96,6 +96,7 @@ public class OverviewFragment extends Fragment {
     }
 
     private void openFile() {
+        Toast.makeText(getContext(), "选择sav目录下.sav文件", Toast.LENGTH_SHORT).show();
         openFileLauncher.launch(new String[]{"*/*"});
     }
 
