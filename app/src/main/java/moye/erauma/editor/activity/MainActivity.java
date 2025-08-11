@@ -2,6 +2,7 @@ package moye.erauma.editor.activity;
 
 import android.os.Bundle;
 import android.view.View;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;

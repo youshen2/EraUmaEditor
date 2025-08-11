@@ -31,22 +31,20 @@ import moye.erauma.editor.R;
 
 public class OverviewFragment extends Fragment {
     private static String currentFileName = null;
-    private View view;
-
-    private final ActivityResultLauncher<String[]> openFileLauncher = registerForActivityResult(
-            new ActivityResultContracts.OpenDocument(),
-            uri -> {
-                if (uri != null) {
-                    readFile(uri);
-                }
-            }
-    );
-
     private final ActivityResultLauncher<String> saveFileLauncher = registerForActivityResult(
             new ActivityResultContracts.CreateDocument("*/*"),
             uri -> {
                 if (uri != null) {
                     saveJsonToFile(uri);
+                }
+            }
+    );
+    private View view;
+    private final ActivityResultLauncher<String[]> openFileLauncher = registerForActivityResult(
+            new ActivityResultContracts.OpenDocument(),
+            uri -> {
+                if (uri != null) {
+                    readFile(uri);
                 }
             }
     );
@@ -81,19 +79,18 @@ public class OverviewFragment extends Fragment {
         update_ui();
     }
 
-    private void update_ui(){
+    private void update_ui() {
         try {
             if (EraUmaEditor.save_data == null) {
                 view.findViewById(R.id.empty_text).setVisibility(View.VISIBLE);
                 view.findViewById(R.id.scroll_view).setVisibility(View.GONE);
-            }
-            else {
+            } else {
                 view.findViewById(R.id.empty_text).setVisibility(View.GONE);
                 view.findViewById(R.id.scroll_view).setVisibility(View.VISIBLE);
                 ((TextView) view.findViewById(R.id.currentFileText)).setText(currentFileName);
                 ((TextView) view.findViewById(R.id.currentFileVersion)).setText(EraUmaEditor.save_data.getInt("version") + "(" + EraUmaEditor.save_data.getInt("code") + ")");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

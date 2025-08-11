@@ -4,13 +4,13 @@
 
     <item
         android:id="@+id/load_file"
-        android:title=""
         android:icon="@drawable/ic_load_file"
+        android:title=""
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/save_file"
-        android:title=""
         android:icon="@drawable/ic_save_file"
+        android:title=""
         app:showAsAction="ifRoom" />
 </menu>

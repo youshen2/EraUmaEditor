@@ -9,31 +9,34 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:baselineAligned="false">
+        android:baselineAligned="false"
+        android:orientation="horizontal">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="4dp">
+            android:layout_margin="4dp"
+            android:layout_weight="1">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp">
+
                 <com.google.android.material.checkbox.MaterialCheckBox
                     android:id="@+id/valueCheckBox1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true" />
+
                 <TextView
                     android:id="@+id/labelTextView1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toStartOf="@id/valueCheckBox1"
                     android:layout_centerVertical="true"
+                    android:layout_toStartOf="@id/valueCheckBox1"
                     android:text="Label 1"
                     android:textAppearance="?attr/textAppearanceTitleMedium" />
             </RelativeLayout>
@@ -43,24 +46,27 @@
             android:id="@+id/card2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="4dp">
+            android:layout_margin="4dp"
+            android:layout_weight="1">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp">
+
                 <com.google.android.material.checkbox.MaterialCheckBox
                     android:id="@+id/valueCheckBox2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true" />
+
                 <TextView
                     android:id="@+id/labelTextView2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toStartOf="@id/valueCheckBox2"
                     android:layout_centerVertical="true"
+                    android:layout_toStartOf="@id/valueCheckBox2"
                     android:text="Label 2"
                     android:textAppearance="?attr/textAppearanceTitleMedium" />
             </RelativeLayout>
@@ -72,8 +78,8 @@
         android:id="@+id/descriptionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
         android:text="Description text goes here."
         android:textAppearance="?attr/textAppearanceBodySmall"
         android:textColor="?attr/colorOnSurfaceVariant"

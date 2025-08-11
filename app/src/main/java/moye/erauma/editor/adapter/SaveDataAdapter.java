@@ -31,6 +31,7 @@ public class SaveDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final int VIEW_TYPE_EDIT_TEXT_DOUBLE = 4;
     private static final int VIEW_TYPE_CHECKBOX_DOUBLE = 5;
     private static final int VIEW_TYPE_SPINNER_DOUBLE = 6;
+    private static final int VIEW_TYPE_HEADER = 7;
 
 
     private final List<EditorItem> items;
@@ -53,9 +54,15 @@ public class SaveDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public int getItemViewType(int position) {
         EditorItem currentItem = items.get(position);
 
-        if (position > 0) {
-            EditorItem prevItem = items.get(position - 1);
-            if (prevItem.layoutType == EditorItem.LayoutType.DOUBLE && currentItem.layoutType == EditorItem.LayoutType.DOUBLE) {
+        if (currentItem.dataType == EditorItem.DataType.HEADER) {
+            return VIEW_TYPE_HEADER;
+        }
+
+        if (currentItem.layoutType == EditorItem.LayoutType.DOUBLE && position > 0) {
+            int prevItemViewType = getItemViewType(position - 1);
+            if (prevItemViewType == VIEW_TYPE_EDIT_TEXT_DOUBLE ||
+                    prevItemViewType == VIEW_TYPE_CHECKBOX_DOUBLE ||
+                    prevItemViewType == VIEW_TYPE_SPINNER_DOUBLE) {
                 return VIEW_TYPE_IGNORE;
             }
         }
@@ -78,6 +85,8 @@ public class SaveDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         switch (viewType) {
+            case VIEW_TYPE_HEADER:
+                return new HeaderViewHolder(inflater.inflate(R.layout.item_editor_header, parent, false));
             case VIEW_TYPE_CHECKBOX:
                 return new CheckboxViewHolder(inflater.inflate(R.layout.item_editor_checkbox, parent, false));
             case VIEW_TYPE_SPINNER:
@@ -100,18 +109,30 @@ public class SaveDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof IgnoreViewHolder) return;
-
+        int viewType = holder.getItemViewType();
         EditorItem item1 = items.get(position);
-        EditorItem item2 = null;
-        if (item1.layoutType == EditorItem.LayoutType.DOUBLE && position + 1 < items.size()) {
-            item2 = items.get(position + 1);
-        }
 
-        if (holder instanceof DoubleViewHolder) {
-            ((DoubleViewHolder) holder).bind(item1, item2);
-        } else if (holder instanceof SingleViewHolder) {
-            ((SingleViewHolder) holder).bind(item1);
+        switch (viewType) {
+            case VIEW_TYPE_HEADER:
+            case VIEW_TYPE_EDIT_TEXT:
+            case VIEW_TYPE_CHECKBOX:
+            case VIEW_TYPE_SPINNER:
+                ((SingleViewHolder) holder).bind(item1);
+                break;
+
+            case VIEW_TYPE_EDIT_TEXT_DOUBLE:
+            case VIEW_TYPE_CHECKBOX_DOUBLE:
+            case VIEW_TYPE_SPINNER_DOUBLE:
+                EditorItem item2 = null;
+                if (position + 1 < items.size() && getItemViewType(position + 1) == VIEW_TYPE_IGNORE) {
+                    item2 = items.get(position + 1);
+                }
+                ((DoubleViewHolder) holder).bind(item1, item2);
+                break;
+
+            case VIEW_TYPE_IGNORE:
+            default:
+                break;
         }
     }
 
@@ -125,6 +146,19 @@ public class SaveDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     static class IgnoreViewHolder extends RecyclerView.ViewHolder {
         IgnoreViewHolder(@NonNull View itemView) { super(itemView); }
+    }
+
+    class HeaderViewHolder extends RecyclerView.ViewHolder implements SingleViewHolder {
+        private final TextView headerTextView;
+
+        HeaderViewHolder(@NonNull View itemView) {
+            super(itemView);
+            headerTextView = (TextView) itemView;
+        }
+
+        public void bind(EditorItem item) {
+            headerTextView.setText(item.label);
+        }
     }
 
     class EditTextHolder extends RecyclerView.ViewHolder implements SingleViewHolder {
@@ -271,14 +305,12 @@ public class SaveDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         public void bind(EditorItem item1, EditorItem item2) {
             bindSingle(layout1, editText1, watcher1, item1);
-
             if (item2 != null) {
                 layout2.setVisibility(View.VISIBLE);
                 bindSingle(layout2, editText2, watcher2, item2);
             } else {
                 layout2.setVisibility(View.GONE);
             }
-
             descriptionTextView.setVisibility(item1.description != null && !item1.description.isEmpty() ? View.VISIBLE : View.GONE);
             descriptionTextView.setText(item1.description);
         }

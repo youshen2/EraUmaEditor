@@ -1,4 +1,5 @@
 <resources>
+
     <style name="Theme.EraUmaEditor" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="materialCardViewStyle">@style/Widget.EraUmaEditor.CardView</item>
     </style>
@@ -12,6 +13,7 @@
 
         <item name="cardBackgroundColor">?attr/colorSurface</item>
     </style>
+
     <style name="ExpandedTitleTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">?attr/colorOnSurface</item>

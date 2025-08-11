@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_overview"
-        android:title="@string/title_overview"
-        android:icon="@drawable/ic_overview" />
+        android:icon="@drawable/ic_overview"
+        android:title="@string/title_overview" />
     <item
         android:id="@+id/nav_character"
-        android:title="@string/title_character"
-        android:icon="@drawable/ic_character" />
+        android:icon="@drawable/ic_character"
+        android:title="@string/title_character" />
     <item
         android:id="@+id/nav_item"
-        android:title="@string/title_item"
-        android:icon="@drawable/ic_inventory" />
+        android:icon="@drawable/ic_inventory"
+        android:title="@string/title_item" />
     <item
         android:id="@+id/nav_global"
-        android:title="@string/title_global"
-        android:icon="@drawable/ic_global" />
+        android:icon="@drawable/ic_global"
+        android:title="@string/title_global" />
 </menu>

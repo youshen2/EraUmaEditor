@@ -11,11 +11,11 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/topAppBar"
+            style="@style/Widget.Material3.Toolbar.Surface"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="@string/title_overview"
             app:menu="@menu/overview_top_app_bar"
-            style="@style/Widget.Material3.Toolbar.Surface" />
+            app:title="@string/title_overview" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -24,10 +24,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:visibility="gone"
         android:text="@string/empty_save"
+        android:textAppearance="?attr/textAppearanceTitleLarge"
         android:textColor="?attr/colorOnSurface"
-        android:textAppearance="?attr/textAppearanceTitleLarge" />
+        android:visibility="gone" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll_view"
@@ -56,32 +56,32 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/current_file"
-                        android:textColor="?attr/colorOnSurface"
-                        android:textAppearance="?attr/textAppearanceTitleMedium" />
+                        android:textAppearance="?attr/textAppearanceTitleMedium"
+                        android:textColor="?attr/colorOnSurface" />
 
                     <TextView
                         android:id="@+id/currentFileText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:textColor="?attr/colorOnSurfaceVariant"
-                        android:textAppearance="?attr/textAppearanceTitleMedium" />
+                        android:textAppearance="?attr/textAppearanceTitleMedium"
+                        android:textColor="?attr/colorOnSurfaceVariant" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/file_version"
-                        android:textColor="?attr/colorOnSurface"
                         android:layout_marginTop="8dp"
-                        android:textAppearance="?attr/textAppearanceTitleMedium" />
+                        android:text="@string/file_version"
+                        android:textAppearance="?attr/textAppearanceTitleMedium"
+                        android:textColor="?attr/colorOnSurface" />
 
                     <TextView
                         android:id="@+id/currentFileVersion"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:textColor="?attr/colorOnSurfaceVariant"
-                        android:textAppearance="?attr/textAppearanceTitleMedium" />
+                        android:textAppearance="?attr/textAppearanceTitleMedium"
+                        android:textColor="?attr/colorOnSurfaceVariant" />
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>

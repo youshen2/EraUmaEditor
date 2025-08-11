@@ -8,6 +8,56 @@ import java.util.Objects;
 
 public class EditorItem {
 
+    @NonNull
+    public final String label;
+    @Nullable
+    public final String description;
+    @NonNull
+    public final String jsonPath;
+    @NonNull
+    public final DataType dataType;
+    @Nullable
+    public final Float maxValue;
+    @Nullable
+    public final String prefix;
+    @Nullable
+    public final String suffix;
+    @NonNull
+    public final LayoutType layoutType;
+    @Nullable
+    public final List<Choice> choices;
+    @NonNull
+    public final BooleanRepresentation booleanRepresentation;
+    private EditorItem(@NonNull String label, @Nullable String description, @NonNull String jsonPath, @NonNull DataType dataType, @Nullable Float maxValue, @Nullable String prefix, @Nullable String suffix, @NonNull LayoutType layoutType, @Nullable List<Choice> choices, @NonNull BooleanRepresentation booleanRepresentation) {
+        this.label = label;
+        this.description = description;
+        this.jsonPath = jsonPath;
+        this.dataType = dataType;
+        this.maxValue = maxValue;
+        this.prefix = prefix;
+        this.suffix = suffix;
+        this.layoutType = layoutType;
+        this.choices = choices;
+        this.booleanRepresentation = booleanRepresentation;
+    }
+
+    public static EditorItem createHeader(String title) {
+        return new Builder(title, "", DataType.HEADER).build();
+    }
+    public enum LayoutType {
+        SINGLE,
+        DOUBLE
+    }
+    public enum DataType {
+        INT, FLOAT, STRING, BOOLEAN, CHOICE,
+        HEADER
+    }
+
+    public enum BooleanRepresentation {
+        AS_INT,
+        AS_BOOLEAN
+    }
+
     public static class Choice {
         public final Object value;
         public final String displayName;
@@ -35,44 +85,6 @@ public class EditorItem {
         public int hashCode() {
             return Objects.hash(value, displayName);
         }
-    }
-
-    public enum LayoutType {
-        SINGLE,
-        DOUBLE
-    }
-
-    public enum DataType {
-        INT, FLOAT, STRING, BOOLEAN, CHOICE
-    }
-
-    public enum BooleanRepresentation {
-        AS_INT,
-        AS_BOOLEAN
-    }
-
-    @NonNull public final String label;
-    @Nullable public final String description;
-    @NonNull public final String jsonPath;
-    @NonNull public final DataType dataType;
-    @Nullable public final Float maxValue;
-    @Nullable public final String prefix;
-    @Nullable public final String suffix;
-    @NonNull public final LayoutType layoutType;
-    @Nullable public final List<Choice> choices;
-    @NonNull public final BooleanRepresentation booleanRepresentation;
-
-    private EditorItem(@NonNull String label, @Nullable String description, @NonNull String jsonPath, @NonNull DataType dataType, @Nullable Float maxValue, @Nullable String prefix, @Nullable String suffix, @NonNull LayoutType layoutType, @Nullable List<Choice> choices, @NonNull BooleanRepresentation booleanRepresentation) {
-        this.label = label;
-        this.description = description;
-        this.jsonPath = jsonPath;
-        this.dataType = dataType;
-        this.maxValue = maxValue;
-        this.prefix = prefix;
-        this.suffix = suffix;
-        this.layoutType = layoutType;
-        this.choices = choices;
-        this.booleanRepresentation = booleanRepresentation;
     }
 
     public static class Builder {
