@@ -58,8 +58,9 @@ public class GlobalFragment extends Fragment {
                 .setLayoutType(EditorItem.LayoutType.DOUBLE)
                 .build());
         items.add(new EditorItem.Builder("当前回合数", "flag/0", EditorItem.DataType.INT)
+                .setDescription("时间回溯！")
                 .build());
-        items.add(new EditorItem.Builder("当前年", "flag/1", EditorItem.DataType.INT)
+        items.add(new EditorItem.Builder("当前年份", "flag/1", EditorItem.DataType.INT)
                 .build());
         items.add(new EditorItem.Builder("当前月", "flag/2", EditorItem.DataType.INT)
                 .setLayoutType(EditorItem.LayoutType.DOUBLE)
@@ -107,6 +108,64 @@ public class GlobalFragment extends Fragment {
                 ))
                 .build());
         items.add(new EditorItem.Builder("筛除菊花赏指令", "flag/71", EditorItem.DataType.CHOICE)
+                .setLayoutType(EditorItem.LayoutType.DOUBLE)
+                .setChoices(Arrays.asList(
+                        new EditorItem.Choice(0, "关"),
+                        new EditorItem.Choice(1, "开")
+                ))
+                .build());
+        items.add(new EditorItem.Builder("读档对话", "flag/127", EditorItem.DataType.CHOICE)
+                .setLayoutType(EditorItem.LayoutType.DOUBLE)
+                .setChoices(Arrays.asList(
+                        new EditorItem.Choice(0, "关"),
+                        new EditorItem.Choice(1, "开")
+                ))
+                .build());
+        items.add(new EditorItem.Builder("彩蛋机制", "flag/129", EditorItem.DataType.CHOICE)
+                .setLayoutType(EditorItem.LayoutType.DOUBLE)
+                .setChoices(Arrays.asList(
+                        new EditorItem.Choice(0, "关"),
+                        new EditorItem.Choice(1, "开")
+                ))
+                .build());
+
+        items.add(EditorItem.createHeader("养成开关"));
+        items.add(new EditorItem.Builder("极端行为限制", "flag/110", EditorItem.DataType.CHOICE)
+                .setLayoutType(EditorItem.LayoutType.DOUBLE)
+                .setChoices(Arrays.asList(
+                        new EditorItem.Choice(0, "关"),
+                        new EditorItem.Choice(1, "开")
+                ))
+                .build());
+        items.add(new EditorItem.Builder("回合声望惩罚", "flag/111", EditorItem.DataType.CHOICE)
+                .setLayoutType(EditorItem.LayoutType.DOUBLE)
+                .setChoices(Arrays.asList(
+                        new EditorItem.Choice(0, "关"),
+                        new EditorItem.Choice(1, "开")
+                ))
+                .build());
+        items.add(new EditorItem.Builder("回合好感惩罚", "flag/112", EditorItem.DataType.CHOICE)
+                .setLayoutType(EditorItem.LayoutType.DOUBLE)
+                .setChoices(Arrays.asList(
+                        new EditorItem.Choice(0, "关"),
+                        new EditorItem.Choice(1, "开")
+                ))
+                .build());
+        items.add(new EditorItem.Builder("回合爱慕惩罚", "flag/113", EditorItem.DataType.CHOICE)
+                .setLayoutType(EditorItem.LayoutType.DOUBLE)
+                .setChoices(Arrays.asList(
+                        new EditorItem.Choice(0, "关"),
+                        new EditorItem.Choice(1, "开")
+                ))
+                .build());
+        items.add(new EditorItem.Builder("压力获取", "flag/125", EditorItem.DataType.CHOICE)
+                .setLayoutType(EditorItem.LayoutType.DOUBLE)
+                .setChoices(Arrays.asList(
+                        new EditorItem.Choice(0, "关"),
+                        new EditorItem.Choice(1, "开")
+                ))
+                .build());
+        items.add(new EditorItem.Builder("不忠惩罚", "flag/126", EditorItem.DataType.CHOICE)
                 .setLayoutType(EditorItem.LayoutType.DOUBLE)
                 .setChoices(Arrays.asList(
                         new EditorItem.Choice(0, "关"),
