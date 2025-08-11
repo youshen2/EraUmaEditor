@@ -16,4 +16,8 @@
         android:id="@+id/nav_global"
         android:icon="@drawable/ic_global"
         android:title="@string/title_global" />
+    <item
+        android:id="@+id/nav_about"
+        android:icon="@drawable/ic_info"
+        android:title="@string/title_about" />
 </menu>

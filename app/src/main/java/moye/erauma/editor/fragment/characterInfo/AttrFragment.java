@@ -14,10 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.appbar.MaterialToolbar;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
+import moye.erauma.editor.Constants;
 import moye.erauma.editor.EraUmaEditor;
 import moye.erauma.editor.R;
 import moye.erauma.editor.adapter.SaveDataAdapter;
@@ -61,6 +65,12 @@ public class AttrFragment extends Fragment {
     }
 
     private void initEditorItems() {
+        items.add(new EditorItem.Builder("招募状态", "cflag/{id}/66", EditorItem.DataType.CHOICE)
+                .setChoices(Arrays.asList(
+                        new EditorItem.Choice(0, "未招募"),
+                        new EditorItem.Choice(1, "已招募")
+                ))
+                .build());
         items.add(EditorItem.createHeader("基础数值（当前回合有效）"));
         items.add(new EditorItem.Builder("体力", "base/{id}/0", EditorItem.DataType.FLOAT)
                 .setLayoutType(EditorItem.LayoutType.DOUBLE)
@@ -256,6 +266,7 @@ public class AttrFragment extends Fragment {
                         new EditorItem.Choice(7, "S")
                 ))
                 .build());
+
         items.add(EditorItem.createHeader("角色信息"));
         items.add(new EditorItem.Builder("性别", "cflag/{id}/0", EditorItem.DataType.CHOICE)
                 .setChoices(Arrays.asList(
@@ -273,6 +284,22 @@ public class AttrFragment extends Fragment {
                         new EditorItem.Choice(5, "骇人")
                 ))
                 .build());
+
+        items.add(EditorItem.createHeader("当前状态"));
+        try {
+            JSONObject item_hold = EraUmaEditor.save_data.getJSONObject("status").getJSONObject(String.valueOf(EraUmaEditor.current_character_id));
+
+            Iterator<String> keys = item_hold.keys();
+            while (keys.hasNext()) {
+                String key = keys.next();
+
+                items.add(new EditorItem.Builder(Constants.STATUS_MAP.get(key), "STATUS/{id}/" + key, EditorItem.DataType.BOOLEAN)
+                        .setLayoutType(EditorItem.LayoutType.DOUBLE)
+                        .build());
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override

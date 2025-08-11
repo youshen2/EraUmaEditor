@@ -13,6 +13,7 @@ import androidx.transition.Fade;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import moye.erauma.editor.R;
+import moye.erauma.editor.fragment.main.AboutFragment;
 import moye.erauma.editor.fragment.main.CharacterFragment;
 import moye.erauma.editor.fragment.main.GlobalFragment;
 import moye.erauma.editor.fragment.main.ItemFragment;
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
                 selectedFragment = new ItemFragment();
             } else if (itemId == R.id.nav_global) {
                 selectedFragment = new GlobalFragment();
+            } else if (itemId == R.id.nav_about) {
+                selectedFragment = new AboutFragment();
             }
 
             if (selectedFragment != null) {

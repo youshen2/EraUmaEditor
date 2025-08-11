@@ -12,7 +12,7 @@
         android:layout_weight="1"
         android:padding="16dp"
         android:textSize="18sp"
-        android:textColor="@android:color/black"
+        android:textColor="?attr/colorOnSurfaceVariant"
         tools:text="Character Name" />
 
 </com.google.android.material.card.MaterialCardView>
