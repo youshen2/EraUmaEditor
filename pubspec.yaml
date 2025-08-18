@@ -1,0 +1,44 @@
+name: era_uma_editor
+description: "EraUma 存档编辑器"
+publish_to: 'none'
+
+version: 1.1.0+2
+
+environment:
+  sdk: '>=3.2.0 <4.0.0' # Shader support requires a recent SDK
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  flutter_riverpod: ^2.5.1
+
+  dynamic_color: ^1.7.0
+  flutter_svg: ^2.0.10+1
+
+  file_picker: ^8.0.3
+  path_provider: ^2.1.3
+  permission_handler: ^11.3.1
+  universal_io: ^2.2.2 # For platform detection
+
+  go_router: ^14.1.0
+
+  url_launcher: ^6.2.6
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
+
+  shaders:
+    - shaders/bg_frag.glsl
