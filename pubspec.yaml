@@ -2,7 +2,7 @@ name: era_uma_editor
 description: "EraUma 存档编辑器"
 publish_to: 'none'
 
-version: 1.1.0+2
+version: 1.1.0
 
 environment:
   sdk: '>=3.2.0 <4.0.0' # Shader support requires a recent SDK

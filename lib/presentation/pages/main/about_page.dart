@@ -134,7 +134,7 @@ class _AboutPageState extends State<AboutPage>
                             leading: const Icon(Icons.code),
                             title: const Text('获取源代码'),
                             onTap: () => _launchUrl(
-                                'https://github.com/youshen2/EraUmaEditor_Flutter'),
+                                'https://github.com/youshen2/EraUmaEditor'),
                           ),
                         ],
                       ),
