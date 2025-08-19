@@ -86,6 +86,30 @@ class SaveDataNotifier extends StateNotifier<SaveDataState> {
       return;
     }
 
+    final bool? confirmed = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('保存提醒'),
+          content: const Text('保存存档可能导致坏档，请先备份原存档文件。\n确定要保存吗？'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('取消'),
+              onPressed: () => Navigator.of(context).pop(false),
+            ),
+            TextButton(
+              child: const Text('确认保存'),
+              onPressed: () => Navigator.of(context).pop(true),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (confirmed != true) {
+      return;
+    }
+
     state = state.copyWith(isLoading: true, clearError: true);
     try {
       const encoder = JsonEncoder.withIndent('  ');
