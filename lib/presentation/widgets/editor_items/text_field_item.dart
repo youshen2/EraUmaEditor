@@ -46,13 +46,47 @@ class _TextFieldItemState extends ConsumerState<TextFieldItem> {
     }
   }
 
-  void _saveChanges() {
+  Future<bool> _showWarningDialog(BuildContext context, String message) async {
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('警告'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('取消'),
+              onPressed: () => Navigator.of(context).pop(false),
+            ),
+            TextButton(
+              child: const Text('确认'),
+              onPressed: () => Navigator.of(context).pop(true),
+            ),
+          ],
+        );
+      },
+    );
+    return result ?? false;
+  }
+
+  Future<void> _saveChanges() async {
     if (!widget.isEnabled) return;
 
     final notifier = ref.read(saveDataProvider.notifier);
     final currentText = _controller.text;
 
     if (currentText == _initialValueFromProvider) {
+      return;
+    }
+
+    bool shouldUpdate = true;
+    if (widget.item.warningMessage != null && context.mounted) {
+      shouldUpdate =
+          await _showWarningDialog(context, widget.item.warningMessage!);
+    }
+
+    if (!shouldUpdate) {
+      _controller.text = _initialValueFromProvider; // Revert if cancelled
       return;
     }
 
@@ -90,6 +124,17 @@ class _TextFieldItemState extends ConsumerState<TextFieldItem> {
 
   @override
   Widget build(BuildContext context) {
+    // Re-sync controller if external data changes and field is not focused
+    final currentValue = ref.watch(saveDataProvider.select((s) => s.data != null
+        ? ref.read(saveDataProvider.notifier).getValue(_path, '')
+        : ''));
+    final currentValueString = currentValue.toString();
+    if (currentValueString != _initialValueFromProvider &&
+        !_focusNode.hasFocus) {
+      _controller.text = currentValueString;
+      _initialValueFromProvider = currentValueString;
+    }
+
     if (!widget.isEnabled && _controller.text.isEmpty) {
       _controller.text = '无效';
     }

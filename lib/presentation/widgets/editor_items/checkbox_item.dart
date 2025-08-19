@@ -16,10 +16,53 @@ class CheckboxItem extends ConsumerWidget {
     required this.isEnabled,
   });
 
+  Future<bool> _showWarningDialog(BuildContext context, String message) async {
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('警告'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('取消'),
+              onPressed: () => Navigator.of(context).pop(false),
+            ),
+            TextButton(
+              child: const Text('确认'),
+              onPressed: () => Navigator.of(context).pop(true),
+            ),
+          ],
+        );
+      },
+    );
+    return result ?? false;
+  }
+
+  Future<void> _onChanged(
+      bool value, BuildContext context, WidgetRef ref) async {
+    final notifier = ref.read(saveDataProvider.notifier);
+    final path = item.jsonPath.replaceAll('{id}', characterId.toString());
+
+    bool shouldUpdate = true;
+    if (item.warningMessage != null && context.mounted) {
+      shouldUpdate = await _showWarningDialog(context, item.warningMessage!);
+    }
+
+    if (shouldUpdate) {
+      dynamic valueToPut;
+      if (item.booleanRepresentation == BooleanRepresentation.asInt) {
+        valueToPut = value ? 1 : 0;
+      } else {
+        valueToPut = value;
+      }
+      notifier.updateValue(path, valueToPut);
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final path = item.jsonPath.replaceAll('{id}', characterId.toString());
-    final notifier = ref.read(saveDataProvider.notifier);
 
     final currentValue = ref.watch(saveDataProvider.select((s) {
       final defaultValue =
@@ -48,17 +91,8 @@ class CheckboxItem extends ConsumerWidget {
         title: Text(item.label),
         subtitle: item.description != null ? Text(item.description!) : null,
         value: isChecked,
-        onChanged: isEnabled
-            ? (bool value) {
-                dynamic valueToPut;
-                if (item.booleanRepresentation == BooleanRepresentation.asInt) {
-                  valueToPut = value ? 1 : 0;
-                } else {
-                  valueToPut = value;
-                }
-                notifier.updateValue(path, valueToPut);
-              }
-            : null,
+        onChanged:
+            isEnabled ? (bool value) => _onChanged(value, context, ref) : null,
       ),
     );
   }

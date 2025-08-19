@@ -27,6 +27,7 @@ class EditorItem {
   final LayoutType layoutType;
   final List<EditorChoice>? choices;
   final BooleanRepresentation booleanRepresentation;
+  final String? warningMessage;
 
   final List<EditorItemCondition>? conditions;
 
@@ -42,6 +43,7 @@ class EditorItem {
     this.choices,
     this.booleanRepresentation = BooleanRepresentation.asInt,
     this.conditions,
+    this.warningMessage,
   });
 
   factory EditorItem.header(String title) {

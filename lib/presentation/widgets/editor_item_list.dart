@@ -40,6 +40,19 @@ class _EditorItemListState extends ConsumerState<EditorItemList> {
     super.dispose();
   }
 
+  bool _checkConditions(List<EditorItemCondition> conditions,
+      Map<String, dynamic> data, int charId) {
+    for (final condition in conditions) {
+      final path = condition.jsonPath.replaceAll('{id}', charId.toString());
+      final actualValue = JsonHelper.get(data, path, null);
+
+      if ((actualValue == condition.value) != condition.isEqual) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     final saveData = ref.watch(saveDataProvider).data;
@@ -78,8 +91,15 @@ class _EditorItemListState extends ConsumerState<EditorItemList> {
 
   List<Widget> _buildWidgets(Map<String, dynamic> saveData) {
     final List<Widget> widgets = [];
-    for (int i = 0; i < widget.items.length; i++) {
-      final currentItem = widget.items[i];
+
+    final visibleItems = widget.items
+        .where((item) =>
+            item.conditions == null ||
+            _checkConditions(item.conditions!, saveData, widget.characterId))
+        .toList();
+
+    for (int i = 0; i < visibleItems.length; i++) {
+      final currentItem = visibleItems[i];
 
       if (currentItem.dataType == DataType.header) {
         widgets.add(HeaderItem(item: currentItem));
@@ -98,11 +118,11 @@ class _EditorItemListState extends ConsumerState<EditorItemList> {
 
       if (currentItem.layoutType == LayoutType.double) {
         final item1 = currentItem;
-        final item2 = (i + 1 < widget.items.length &&
-                widget.items[i + 1].layoutType == LayoutType.double &&
-                widget.items[i + 1].dataType != DataType.header &&
-                widget.items[i + 1].dataType != DataType.info)
-            ? widget.items[i + 1]
+        final item2 = (i + 1 < visibleItems.length &&
+                visibleItems[i + 1].layoutType == LayoutType.double &&
+                visibleItems[i + 1].dataType != DataType.header &&
+                visibleItems[i + 1].dataType != DataType.info)
+            ? visibleItems[i + 1]
             : null;
 
         widgets.add(

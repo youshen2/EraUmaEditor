@@ -2,7 +2,6 @@ import 'package:era_uma_editor/config/constants.dart';
 import 'package:era_uma_editor/data/models/editor_item.dart';
 import 'package:era_uma_editor/data/providers/save_data_provider.dart';
 import 'package:era_uma_editor/presentation/widgets/editor_item_list.dart';
-import 'package:era_uma_editor/utils/json_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,15 +14,6 @@ class AttrPage extends ConsumerStatefulWidget {
 }
 
 class _AttrPageState extends ConsumerState<AttrPage> {
-  late final List<EditorItem> _items;
-
-  @override
-  void initState() {
-    super.initState();
-    final data = ref.read(saveDataProvider).data;
-    _items = _buildItems(data, widget.characterId);
-  }
-
   static final List<EditorChoice> _aptitudeChoices = [
     EditorChoice(0, "G"),
     EditorChoice(1, "F"),
@@ -34,19 +24,6 @@ class _AttrPageState extends ConsumerState<AttrPage> {
     EditorChoice(6, "A"),
     EditorChoice(7, "S"),
   ];
-
-  bool _checkConditions(List<EditorItemCondition> conditions,
-      Map<String, dynamic> data, int charId) {
-    for (final condition in conditions) {
-      final path = condition.jsonPath.replaceAll('{id}', charId.toString());
-      final actualValue = JsonHelper.get(data, path, null);
-
-      if ((actualValue == condition.value) != condition.isEqual) {
-        return false;
-      }
-    }
-    return true;
-  }
 
   List<EditorItem> _buildItems(Map<String, dynamic>? data, int charId) {
     if (data == null) return [];
@@ -63,7 +40,8 @@ class _AttrPageState extends ConsumerState<AttrPage> {
             EditorChoice(1, '已招募'),
           ],
           description: "决定角色是否在队伍中",
-          layoutType: LayoutType.double),
+          layoutType: LayoutType.double,
+          warningMessage: '修改招募状态可能会影响队伍列表和相关事件，确定要修改吗？'),
       EditorItem(
           label: '年龄',
           jsonPath: 'cflag/{id}/65',
@@ -283,37 +261,31 @@ class _AttrPageState extends ConsumerState<AttrPage> {
       ),
     ];
 
-    final List<EditorItem> items = allPossibleItems
-        .where((item) =>
-            item.conditions == null ||
-            _checkConditions(item.conditions!, data, charId))
-        .toList();
-
     try {
       final statusMap =
           data['status'][charId.toString()] as Map<String, dynamic>;
       if (statusMap.isNotEmpty) {
-        items.add(EditorItem.header('当前状态'));
+        allPossibleItems.add(EditorItem.header('当前状态'));
 
         final sortedKeys = statusMap.keys.toList()
           ..sort((a, b) => int.parse(a).compareTo(int.parse(b)));
 
         for (var key in sortedKeys) {
           final statusName = Constants.STATUS_MAP[key] ?? '未知状态 $key';
-          items.add(
+          allPossibleItems.add(
             EditorItem(
-              label: statusName,
-              jsonPath: 'status/{id}/$key',
-              dataType: DataType.boolean,
-              layoutType: LayoutType.double,
-            ),
+                label: statusName,
+                jsonPath: 'status/{id}/$key',
+                dataType: DataType.boolean,
+                layoutType: LayoutType.double,
+                warningMessage: '部分状态可能需要在特定情况下并进行搭配才会生效。'),
           );
         }
       }
     } catch (e) {
       // NULL
     }
-    return items;
+    return allPossibleItems;
   }
 
   @override
@@ -322,8 +294,9 @@ class _AttrPageState extends ConsumerState<AttrPage> {
     if (saveData == null) {
       return const Center(child: Text('存档未加载'));
     }
+    final items = _buildItems(saveData, widget.characterId);
     return EditorItemList(
-      items: _items,
+      items: items,
       asSliver: false,
       characterId: widget.characterId,
     );
