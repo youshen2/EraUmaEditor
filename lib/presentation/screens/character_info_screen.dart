@@ -2,7 +2,6 @@ import 'package:era_uma_editor/data/providers/save_data_provider.dart';
 import 'package:era_uma_editor/presentation/pages/character_info/ability_page.dart';
 import 'package:era_uma_editor/presentation/pages/character_info/attr_page.dart';
 import 'package:era_uma_editor/presentation/pages/character_info/callname_page.dart';
-import 'package:era_uma_editor/presentation/pages/character_info/ex_page.dart';
 import 'package:era_uma_editor/presentation/pages/character_info/exp_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +33,6 @@ class _CharacterInfoScreenState extends ConsumerState<CharacterInfoScreen> {
       CallnamePage(characterId: widget.characterId),
       AbilityPage(characterId: widget.characterId),
       ExpPage(characterId: widget.characterId),
-      ExPage(characterId: widget.characterId),
     ];
 
     const pageConfigs = [
@@ -53,11 +51,6 @@ class _CharacterInfoScreenState extends ConsumerState<CharacterInfoScreen> {
         'label': '经验',
         'icon': Icons.emoji_events_outlined,
         'selectedIcon': Icons.emoji_events
-      },
-      {
-        'label': '经历',
-        'icon': Icons.favorite_border,
-        'selectedIcon': Icons.favorite
       },
     ];
 

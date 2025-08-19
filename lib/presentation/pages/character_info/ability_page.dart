@@ -34,10 +34,8 @@ class _AbilityPageState extends ConsumerState<AbilityPage> {
       final sortedKeys = ablMap.keys.toList()
         ..sort((a, b) => int.parse(a).compareTo(int.parse(b)));
 
+      items.add(EditorItem.header('比赛相关'));
       for (var key in sortedKeys) {
-        if (int.tryParse(key) == 7) {
-          items.add(EditorItem.header('性爱等级'));
-        }
         final ablName = Constants.ABL_MAP[key] ?? '未知能力 $key';
         items.add(
           EditorItem(
@@ -48,6 +46,15 @@ class _AbilityPageState extends ConsumerState<AbilityPage> {
             suffix: '级',
           ),
         );
+        if (int.tryParse(key) == 7) {
+          items.add(EditorItem.header('床技(技巧)'));
+        } else if (int.tryParse(key) == 19) {
+          items.add(EditorItem.header('床技(掌握)'));
+        } else if (int.tryParse(key) == 27) {
+          items.add(EditorItem.header('床技(忍耐)'));
+        } else if (int.tryParse(key) == 37) {
+          items.add(EditorItem.header('床技(其他)'));
+        }
       }
     } catch (e) {
       return [EditorItem.header('无法加载能力数据')];

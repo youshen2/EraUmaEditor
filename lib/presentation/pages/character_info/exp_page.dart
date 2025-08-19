@@ -34,10 +34,8 @@ class _ExpPageState extends ConsumerState<ExpPage> {
       final sortedKeys = expMap.keys.toList()
         ..sort((a, b) => int.parse(a).compareTo(int.parse(b)));
 
+      items.add(EditorItem.header('养马相关经验'));
       for (var key in sortedKeys) {
-        if (int.tryParse(key) == 20) {
-          items.add(EditorItem.header('爱慕相关'));
-        }
         final expName = Constants.EXP_MAP[key] ?? '未知经验 $key';
         items.add(
           EditorItem(
@@ -47,6 +45,29 @@ class _ExpPageState extends ConsumerState<ExpPage> {
             layoutType: LayoutType.double,
           ),
         );
+        if (int.tryParse(key) == 19) {
+          items.add(EditorItem.header('社交经历'));
+        } else if (int.tryParse(key) == 20) {
+          items.add(EditorItem.header('调教经历'));
+        } else if (int.tryParse(key) == 28) {
+          items.add(EditorItem.header('调教经历(口)'));
+        } else if (int.tryParse(key) == 38) {
+          items.add(EditorItem.header('调教经历(乳)'));
+        } else if (int.tryParse(key) == 45) {
+          items.add(EditorItem.header('调教经历(手)'));
+        } else if (int.tryParse(key) == 54) {
+          items.add(EditorItem.header('调教经历(足)'));
+        } else if (int.tryParse(key) == 62) {
+          items.add(EditorItem.header('调教经历(身)'));
+        } else if (int.tryParse(key) == 72) {
+          items.add(EditorItem.header('调教经历(菊)'));
+        } else if (int.tryParse(key) == 83) {
+          items.add(EditorItem.header('调教经历(虐)'));
+        } else if (int.tryParse(key) == 95) {
+          items.add(EditorItem.header('调教经历(茎)'));
+        } else if (int.tryParse(key) == 107) {
+          items.add(EditorItem.header('调教经历(膣)'));
+        }
       }
     } catch (e) {
       return [EditorItem.header('无法加载经验数据')];

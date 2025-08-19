@@ -30,6 +30,7 @@ class _AttrPageState extends ConsumerState<AttrPage> {
 
     final List<EditorItem> allPossibleItems = [
       EditorItem.info("人类无法被育成，如果你想体验修改器的力量、对人类进行育成，请到下方将种族修改为“马娘”。"),
+      EditorItem.header("事件相关"),
       EditorItem(
           label: '招募状态',
           jsonPath: 'cflag/{id}/66',
@@ -56,18 +57,30 @@ class _AttrPageState extends ConsumerState<AttrPage> {
           ],
           layoutType: LayoutType.double),
       EditorItem(
-          label: '殿堂',
-          jsonPath: 'cflag/{id}/47',
-          dataType: DataType.boolean,
-          layoutType: LayoutType.double),
+          label: '育成次数', jsonPath: 'cflag/{id}/48', dataType: DataType.int),
+      EditorItem.info("如果无法进行育成，请将育成次数改为1或0。"),
+      EditorItem(
+        label: '殿堂',
+        jsonPath: 'cflag/{id}/47',
+        dataType: DataType.boolean,
+        layoutType: LayoutType.double,
+        description: '停止育成，无法训练、比赛等',
+      ),
       EditorItem(
           label: '可再次育成',
           jsonPath: 'cflag/{id}/50',
           dataType: DataType.boolean,
           layoutType: LayoutType.double),
       EditorItem(
-          label: '育成次数', jsonPath: 'cflag/{id}/48', dataType: DataType.int),
-      EditorItem.info("如果无法进行育成，请将育成次数改为1或0。"),
+          label: '好感盾',
+          jsonPath: 'cflag/{id}/62',
+          dataType: DataType.boolean,
+          layoutType: LayoutType.double),
+      EditorItem(
+          label: '随机招募',
+          jsonPath: 'cflag/{id}/67',
+          dataType: DataType.boolean,
+          layoutType: LayoutType.double),
       EditorItem.header('基础数值'),
       EditorItem.info("如果你修改的是训练员，请注意：训练员的精力和体力只会在当前回合生效。"),
       EditorItem(
@@ -90,7 +103,7 @@ class _AttrPageState extends ConsumerState<AttrPage> {
           jsonPath: 'maxbase/{id}/1',
           dataType: DataType.float,
           layoutType: LayoutType.double),
-      EditorItem.header('能力数值'),
+      EditorItem.header('基础属性'),
       EditorItem(
           label: '速度',
           jsonPath: 'base/{id}/5',
@@ -142,6 +155,19 @@ class _AttrPageState extends ConsumerState<AttrPage> {
           dataType: DataType.float,
           layoutType: LayoutType.double),
       EditorItem(
+        label: '干劲',
+        jsonPath: 'cflag/{id}/40',
+        dataType: DataType.choice,
+        choices: [
+          EditorChoice(-2, "极差"),
+          EditorChoice(-1, "较差"),
+          EditorChoice(0, "一般"),
+          EditorChoice(1, "较佳"),
+          EditorChoice(2, "极佳"),
+        ],
+      ),
+      EditorItem.header('隐藏属性'),
+      EditorItem(
           label: '性欲',
           jsonPath: 'base/{id}/10',
           dataType: DataType.float,
@@ -171,18 +197,6 @@ class _AttrPageState extends ConsumerState<AttrPage> {
           jsonPath: 'base/{id}/13',
           dataType: DataType.float,
           layoutType: LayoutType.double),
-      EditorItem(
-        label: '干劲',
-        jsonPath: 'cflag/{id}/40',
-        dataType: DataType.choice,
-        choices: [
-          EditorChoice(-2, "极差"),
-          EditorChoice(-1, "较差"),
-          EditorChoice(0, "一般"),
-          EditorChoice(1, "较佳"),
-          EditorChoice(2, "极佳"),
-        ],
-      ),
       EditorItem.header('关系数值'),
       EditorItem(
           label: '好感度',
@@ -276,6 +290,20 @@ class _AttrPageState extends ConsumerState<AttrPage> {
           ],
           layoutType: LayoutType.double),
       EditorItem(
+        label: '气性',
+        jsonPath: 'cflag/{id}/2',
+        dataType: DataType.choice,
+        choices: [
+          EditorChoice(-3, '顺从'),
+          EditorChoice(-2, '担心'),
+          EditorChoice(-1, '认真'),
+          EditorChoice(0, '普通'),
+          EditorChoice(1, '要强'),
+          EditorChoice(2, '顽固'),
+          EditorChoice(3, '热血'),
+        ],
+      ),
+      EditorItem(
         label: '阴茎尺寸',
         jsonPath: 'cflag/{id}/4',
         dataType: DataType.choice,
@@ -291,27 +319,156 @@ class _AttrPageState extends ConsumerState<AttrPage> {
               jsonPath: 'cflag/{id}/0', value: 0, isEqual: false),
         ],
       ),
+      EditorItem(
+        label: '下胸围',
+        jsonPath: 'cflag/{id}/3',
+        dataType: DataType.float,
+        description: '大于200为胸部，其他为乳房',
+        conditions: [
+          EditorItemCondition(jsonPath: 'cflag/{id}/0', value: 0),
+        ],
+      ),
+      EditorItem(
+        label: '身高',
+        jsonPath: 'cflag/{id}/6',
+        dataType: DataType.float,
+        layoutType: LayoutType.double,
+      ),
+      EditorItem(
+        label: '胸围',
+        jsonPath: 'cflag/{id}/7',
+        dataType: DataType.float,
+        layoutType: LayoutType.double,
+      ),
+      EditorItem(
+        label: '腰围',
+        jsonPath: 'cflag/{id}/8',
+        dataType: DataType.float,
+        layoutType: LayoutType.double,
+      ),
+      EditorItem(
+        label: '臀围',
+        jsonPath: 'cflag/{id}/9',
+        dataType: DataType.float,
+        layoutType: LayoutType.double,
+      ),
+      EditorItem(
+        label: '肤色深度',
+        jsonPath: 'cflag/{id}/10',
+        dataType: DataType.choice,
+        choices: [
+          EditorChoice(-1, "偏短"),
+          EditorChoice(0, "正常"),
+          EditorChoice(1, "偏深"),
+          EditorChoice(2, "小麦色"),
+        ],
+        layoutType: LayoutType.double,
+      ),
+      EditorItem(
+        label: '头发长度',
+        jsonPath: 'cflag/{id}/11',
+        dataType: DataType.choice,
+        choices: [
+          EditorChoice(0, "短发"),
+          EditorChoice(1, "齐肩"),
+          EditorChoice(2, "齐腰"),
+        ],
+        layoutType: LayoutType.double,
+      ),
+      EditorItem(
+        label: '流星大小',
+        jsonPath: 'cflag/{id}/12',
+        dataType: DataType.choice,
+        choices: [
+          EditorChoice(-2, "无"),
+          EditorChoice(-1, "偏小"),
+          EditorChoice(0, "普通"),
+          EditorChoice(1, "偏大"),
+          EditorChoice(2, "全长"),
+        ],
+      ),
+      EditorItem(
+        label: '腋毛',
+        jsonPath: 'cflag/{id}/13',
+        dataType: DataType.choice,
+        choices: [
+          EditorChoice(0, "光滑"),
+          EditorChoice(1, "稀疏"),
+          EditorChoice(2, "整齐"),
+          EditorChoice(3, "浓密"),
+          EditorChoice(4, "杂乱"),
+          EditorChoice(5, "剛毛"),
+        ],
+        layoutType: LayoutType.double,
+      ),
+      EditorItem(
+        label: '阴毛',
+        jsonPath: 'cflag/{id}/14',
+        dataType: DataType.choice,
+        choices: [
+          EditorChoice(0, "光滑"),
+          EditorChoice(1, "稀疏"),
+          EditorChoice(2, "整齐"),
+          EditorChoice(3, "浓密"),
+          EditorChoice(4, "杂乱"),
+          EditorChoice(5, "剛毛"),
+        ],
+        layoutType: LayoutType.double,
+      ),
+      EditorItem.header('调教与后代相关'),
+      EditorItem(
+        label: '妊娠阶段',
+        jsonPath: 'cflag/{id}/81',
+        dataType: DataType.choice,
+        choices: [
+          EditorChoice(-1, "恢复期"),
+          EditorChoice(0, "无"),
+          EditorChoice(1, "孕早期"),
+          EditorChoice(2, "安定期"),
+          EditorChoice(3, "孕晚期"),
+          EditorChoice(4, "临产"),
+        ],
+        layoutType: LayoutType.double,
+      ),
+      EditorItem(
+        label: '妊娠回合计时',
+        jsonPath: 'cflag/{id}/82',
+        dataType: DataType.int,
+        layoutType: LayoutType.double,
+        description: '1~6=早 7~14=安 15+=晚',
+      ),
     ];
 
     try {
       final statusMap =
           data['status'][charId.toString()] as Map<String, dynamic>;
       if (statusMap.isNotEmpty) {
-        allPossibleItems.add(EditorItem.header('当前状态'));
+        allPossibleItems.add(EditorItem.header('当前状态（会被重置）'));
 
         final sortedKeys = statusMap.keys.toList()
           ..sort((a, b) => int.parse(a).compareTo(int.parse(b)));
 
         for (var key in sortedKeys) {
           final statusName = Constants.STATUS_MAP[key] ?? '未知状态 $key';
-          allPossibleItems.add(
-            EditorItem(
-                label: statusName,
-                jsonPath: 'status/{id}/$key',
-                dataType: DataType.boolean,
-                layoutType: LayoutType.double,
-                warningMessage: '部分状态可能需要在特定情况下并进行搭配才会生效。'),
-          );
+          final statusDesc = Constants.STATUS_DESC_MAP[key] ?? '';
+          final isShow = !Constants.STATUS_CID_MAP.containsKey(key) ||
+              Constants.STATUS_CID_MAP[key] == charId;
+          if (isShow) {
+            allPossibleItems.add(
+              EditorItem(
+                  label: statusName,
+                  jsonPath: 'status/{id}/$key',
+                  dataType: DataType.boolean,
+                  layoutType: LayoutType.double,
+                  description: statusDesc,
+                  warningMessage: '部分状态可能需要在特定情况下并进行搭配才会生效。'),
+            );
+          }
+          if (int.tryParse(key) == 26) {
+            allPossibleItems.add(EditorItem.header('床技相关'));
+          } else if (int.tryParse(key) == 42) {
+            allPossibleItems.add(EditorItem.header('角色专属'));
+          }
         }
       }
     } catch (e) {
