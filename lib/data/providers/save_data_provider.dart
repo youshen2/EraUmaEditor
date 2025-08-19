@@ -46,7 +46,15 @@ class SaveDataNotifier extends StateNotifier<SaveDataState> {
 
       if (result != null && result.files.single.path != null) {
         final file = universal_io.File(result.files.single.path!);
-        final content = await file.readAsString();
+        final bytes = await file.readAsBytes();
+        String content;
+
+        try {
+          final decompressed = universal_io.gzip.decode(bytes);
+          content = utf8.decode(decompressed);
+        } catch (e) {
+          content = utf8.decode(bytes);
+        }
 
         final dynamic decoded = jsonDecode(content);
         if (decoded is! Map<String, dynamic>) {
