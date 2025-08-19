@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'package:era_uma_editor/presentation/widgets/animated_shader_background.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:universal_io/io.dart';
+import 'package:http/http.dart' as http;
 
 class AboutPage extends StatefulWidget {
   const AboutPage({super.key});
@@ -78,6 +81,92 @@ class _AboutPageState extends State<AboutPage>
     }
   }
 
+  bool _isNewerVersion(String newVersion, String currentVersion) {
+    final newParts = newVersion.split('.').map(int.parse).toList();
+    final currentParts = currentVersion.split('.').map(int.parse).toList();
+
+    for (int i = 0; i < newParts.length; i++) {
+      if (i >= currentParts.length) {
+        return true;
+      }
+      if (newParts[i] > currentParts[i]) {
+        return true;
+      }
+      if (newParts[i] < currentParts[i]) {
+        return false;
+      }
+    }
+    return false;
+  }
+
+  Future<void> _checkForUpdates() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const PopScope(
+        canPop: false,
+        child: Center(child: CircularProgressIndicator()),
+      ),
+    );
+
+    try {
+      final packageInfo = await PackageInfo.fromPlatform();
+      final currentVersion = packageInfo.version;
+
+      final uri = Uri.parse(
+          'https://api.github.com/repos/youshen2/EraUmaEditor/releases/latest');
+      final response = await http.get(uri);
+
+      if (mounted) Navigator.of(context).pop();
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final latestVersion = (data['tag_name'] as String).replaceAll('v', '');
+        final releaseUrl = data['html_url'] as String;
+
+        if (_isNewerVersion(latestVersion, currentVersion)) {
+          if (mounted) {
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: const Text('发现新版本'),
+                content: Text(
+                    '检测到新版本 $latestVersion (当前版本 $currentVersion)。\n是否前往下载页面？'),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: const Text('关我屁事'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      _launchUrl(releaseUrl);
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('前往下载'),
+                  ),
+                ],
+              ),
+            );
+          }
+        } else {
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('当前已是最新版本')),
+            );
+          }
+        }
+      } else {
+        throw Exception('无法获取版本信息');
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('检查更新失败: $e')),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -135,6 +224,11 @@ class _AboutPageState extends State<AboutPage>
                             title: const Text('获取源代码'),
                             onTap: () => _launchUrl(
                                 'https://github.com/youshen2/EraUmaEditor'),
+                          ),
+                          ListTile(
+                            leading: const Icon(Icons.system_update_alt),
+                            title: const Text('检查更新'),
+                            onTap: _checkForUpdates,
                           ),
                         ],
                       ),
