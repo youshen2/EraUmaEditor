@@ -29,13 +29,13 @@ class _AttrPageState extends ConsumerState<AttrPage> {
     if (data == null) return [];
 
     final List<EditorItem> allPossibleItems = [
-      EditorItem.info(
-          "如果你修改的是训练员，请注意：训练员的精力和体力只会在当前回合生效。\n\n状态：\n发情期+排卵期=特殊假期"),
+      EditorItem.info("人类无法被育成，如果你想体验修改器的力量、对人类进行育成，请到下方将种族修改为“马娘”。"),
       EditorItem(
           label: '招募状态',
           jsonPath: 'cflag/{id}/66',
           dataType: DataType.choice,
           choices: [
+            EditorChoice(-1, '剧情角色'),
             EditorChoice(0, '未招募'),
             EditorChoice(1, '已招募'),
           ],
@@ -67,7 +67,9 @@ class _AttrPageState extends ConsumerState<AttrPage> {
           layoutType: LayoutType.double),
       EditorItem(
           label: '育成次数', jsonPath: 'cflag/{id}/48', dataType: DataType.int),
-      EditorItem.header('基础数值（当前回合有效）'),
+      EditorItem.info("如果无法进行育成，请将育成次数改为1或0。"),
+      EditorItem.header('基础数值'),
+      EditorItem.info("如果你修改的是训练员，请注意：训练员的精力和体力只会在当前回合生效。"),
       EditorItem(
           label: '体力',
           jsonPath: 'base/{id}/0',
@@ -140,6 +142,36 @@ class _AttrPageState extends ConsumerState<AttrPage> {
           dataType: DataType.float,
           layoutType: LayoutType.double),
       EditorItem(
+          label: '性欲',
+          jsonPath: 'base/{id}/10',
+          dataType: DataType.float,
+          layoutType: LayoutType.double),
+      EditorItem(
+          label: '最大性欲',
+          jsonPath: 'maxbase/{id}/10',
+          dataType: DataType.float,
+          layoutType: LayoutType.double),
+      EditorItem(
+          label: '压力',
+          jsonPath: 'base/{id}/11',
+          dataType: DataType.float,
+          layoutType: LayoutType.double),
+      EditorItem(
+          label: '最大压力',
+          jsonPath: 'maxbase/{id}/11',
+          dataType: DataType.float,
+          layoutType: LayoutType.double),
+      EditorItem(
+          label: '体重偏差',
+          jsonPath: 'base/{id}/12',
+          dataType: DataType.float,
+          layoutType: LayoutType.double),
+      EditorItem(
+          label: '药物残留',
+          jsonPath: 'base/{id}/13',
+          dataType: DataType.float,
+          layoutType: LayoutType.double),
+      EditorItem(
         label: '干劲',
         jsonPath: 'cflag/{id}/40',
         dataType: DataType.choice,
@@ -155,12 +187,12 @@ class _AttrPageState extends ConsumerState<AttrPage> {
       EditorItem(
           label: '好感度',
           jsonPath: 'relation/{id}/0',
-          dataType: DataType.float,
+          dataType: DataType.int,
           layoutType: LayoutType.double),
       EditorItem(
           label: '爱慕',
           jsonPath: 'love/{id}',
-          dataType: DataType.float,
+          dataType: DataType.int,
           layoutType: LayoutType.double),
       EditorItem.header('适应性'),
       EditorItem(
