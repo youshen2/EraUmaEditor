@@ -17,6 +17,7 @@ class ItemPage extends ConsumerWidget {
       final sortedKeys = itemHold.keys.toList()
         ..sort((a, b) => int.parse(a).compareTo(int.parse(b)));
 
+      items.add(EditorItem.header('速子的小卖部'));
       for (var key in sortedKeys) {
         final itemName = Constants.ITEM_MAP[key] ?? '未知物品 $key';
         items.add(
@@ -28,6 +29,19 @@ class ItemPage extends ConsumerWidget {
             suffix: '个',
           ),
         );
+        if (int.tryParse(key) == 48) {
+          items.add(EditorItem.header('车站 - 载具店'));
+        } else if (int.tryParse(key) == 67) {
+          items.add(EditorItem.header('神秘小店'));
+        } else if (int.tryParse(key) == 85) {
+          items.add(EditorItem.header('不贩卖的特殊道具'));
+        } else if (int.tryParse(key) == 101) {
+          items.add(EditorItem.header('不贩卖的特殊道具(爱丽速子)'));
+        } else if (int.tryParse(key) == 105) {
+          items.add(EditorItem.header('不贩卖的特殊道具(麦吉罗的呼唤)'));
+        } else if (int.tryParse(key) == 111) {
+          items.add(EditorItem.header('不贩卖的特殊道具(特殊载具)'));
+        }
       }
     } catch (e) {
       return [EditorItem.header('无法加载物品数据')];
