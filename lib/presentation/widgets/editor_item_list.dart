@@ -103,7 +103,29 @@ class _EditorItemListState extends ConsumerState<EditorItemList> {
       final currentItem = visibleItems[i];
 
       if (currentItem.dataType == DataType.header) {
-        final isCollapsed = _collapsedStates[currentItem.label] ?? false;
+        int nextHeaderIndex = -1;
+        for (int j = i + 1; j < visibleItems.length; j++) {
+          if (visibleItems[j].dataType == DataType.header) {
+            nextHeaderIndex = j;
+            break;
+          }
+        }
+        final endIndex =
+            nextHeaderIndex != -1 ? nextHeaderIndex : visibleItems.length;
+        bool hasContent = false;
+        for (int j = i + 1; j < endIndex; j++) {
+          if (visibleItems[j].dataType != DataType.info ||
+              visibleItems[j].label.isNotEmpty) {
+            hasContent = true;
+            break;
+          }
+        }
+        if (!hasContent) {
+          i = endIndex - 1;
+          continue;
+        }
+
+        final isCollapsed = _collapsedStates[currentItem.label] ?? true;
         widgets.add(HeaderItem(
           item: currentItem,
           isCollapsed: isCollapsed,
@@ -115,18 +137,7 @@ class _EditorItemListState extends ConsumerState<EditorItemList> {
         ));
 
         if (isCollapsed) {
-          int nextHeaderIndex = -1;
-          for (int j = i + 1; j < visibleItems.length; j++) {
-            if (visibleItems[j].dataType == DataType.header) {
-              nextHeaderIndex = j;
-              break;
-            }
-          }
-          if (nextHeaderIndex != -1) {
-            i = nextHeaderIndex - 1;
-          } else {
-            i = visibleItems.length;
-          }
+          i = endIndex - 1;
         }
         continue;
       }

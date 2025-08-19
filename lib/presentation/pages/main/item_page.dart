@@ -27,6 +27,7 @@ class ItemPage extends ConsumerWidget {
             dataType: DataType.int,
             layoutType: LayoutType.double,
             suffix: '个',
+            warningMessage: '部分物品存在最大值限制，超出最大值可能会坏档。',
           ),
         );
         if (int.tryParse(key) == 48) {

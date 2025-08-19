@@ -29,20 +29,20 @@ class _AttrPageState extends ConsumerState<AttrPage> {
     if (data == null) return [];
 
     final List<EditorItem> allPossibleItems = [
-      EditorItem.info("人类无法被育成，如果你想体验修改器的力量、对人类进行育成，请到下方将种族修改为“马娘”。"),
+      EditorItem.info("人类无法被育成，如果你想体验修改器的力量、对人类进行育成，请到下方“角色信息”中将种族修改为“马娘”。"),
       EditorItem.header("事件相关"),
       EditorItem(
-          label: '招募状态',
-          jsonPath: 'cflag/{id}/66',
-          dataType: DataType.choice,
-          choices: [
-            EditorChoice(-1, '剧情角色'),
-            EditorChoice(0, '未招募'),
-            EditorChoice(1, '已招募'),
-          ],
-          description: "决定角色是否在队伍中",
-          layoutType: LayoutType.double,
-          warningMessage: '修改招募状态可能会影响队伍列表和相关事件，确定要修改吗？'),
+        label: '招募状态',
+        jsonPath: 'cflag/{id}/66',
+        dataType: DataType.choice,
+        choices: [
+          EditorChoice(-1, '剧情角色'),
+          EditorChoice(0, '未招募'),
+          EditorChoice(1, '已招募'),
+        ],
+        description: "决定角色是否在队伍中",
+        layoutType: LayoutType.double,
+      ),
       EditorItem(
           label: '年龄',
           jsonPath: 'cflag/{id}/65',
@@ -69,16 +69,6 @@ class _AttrPageState extends ConsumerState<AttrPage> {
       EditorItem(
           label: '可再次育成',
           jsonPath: 'cflag/{id}/50',
-          dataType: DataType.boolean,
-          layoutType: LayoutType.double),
-      EditorItem(
-          label: '好感盾',
-          jsonPath: 'cflag/{id}/62',
-          dataType: DataType.boolean,
-          layoutType: LayoutType.double),
-      EditorItem(
-          label: '随机招募',
-          jsonPath: 'cflag/{id}/67',
           dataType: DataType.boolean,
           layoutType: LayoutType.double),
       EditorItem.header('基础数值'),
@@ -456,12 +446,12 @@ class _AttrPageState extends ConsumerState<AttrPage> {
           if (isShow) {
             allPossibleItems.add(
               EditorItem(
-                  label: statusName,
-                  jsonPath: 'status/{id}/$key',
-                  dataType: DataType.boolean,
-                  layoutType: LayoutType.double,
-                  description: statusDesc,
-                  warningMessage: '部分状态可能需要在特定情况下并进行搭配才会生效。'),
+                label: statusName,
+                jsonPath: 'status/{id}/$key',
+                dataType: DataType.boolean,
+                layoutType: LayoutType.double,
+                description: statusDesc,
+              ),
             );
           }
           if (int.tryParse(key) == 26) {

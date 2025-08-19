@@ -27,7 +27,12 @@ class GlobalPage extends ConsumerWidget {
         jsonPath: 'flag/16',
         dataType: DataType.int,
         layoutType: LayoutType.double),
-    EditorItem(label: '当前回合数', jsonPath: 'flag/0', dataType: DataType.int),
+    EditorItem(
+      label: '当前回合数',
+      jsonPath: 'flag/0',
+      dataType: DataType.int,
+      warningMessage: '不建议修改此项，可能会导致未知后果。',
+    ),
     EditorItem(label: '当前年份', jsonPath: 'flag/1', dataType: DataType.int),
     EditorItem(
         label: '当前月',
