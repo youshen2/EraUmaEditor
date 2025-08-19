@@ -114,21 +114,41 @@ class CheckboxItem extends ConsumerWidget {
       onTap: !isEnabled ? () => _showForceModifyDialog(context, ref) : null,
       child: AbsorbPointer(
         absorbing: !isEnabled,
-        child: Card(
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            side: BorderSide(
-                color: Theme.of(context).colorScheme.outlineVariant, width: 1),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          margin: EdgeInsets.zero,
-          child: SwitchListTile(
-            title: Text(item.label),
-            subtitle: item.description != null ? Text(item.description!) : null,
-            value: isChecked,
-            onChanged: isEnabled
-                ? (bool value) => _onChanged(value, context, ref)
-                : null,
+        child: Opacity(
+          opacity: isEnabled ? 1.0 : 0.6,
+          child: InputDecorator(
+            decoration: InputDecoration(
+              contentPadding: const EdgeInsets.fromLTRB(12, 12, 4, 12),
+              border: const OutlineInputBorder(),
+              enabled: isEnabled,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(item.label,
+                          style: Theme.of(context).textTheme.bodyLarge),
+                      if (item.description != null)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 2.0),
+                          child: Text(
+                            item.description!,
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                Switch(
+                  value: isChecked,
+                  onChanged: (bool value) => _onChanged(value, context, ref),
+                ),
+              ],
+            ),
           ),
         ),
       ),
