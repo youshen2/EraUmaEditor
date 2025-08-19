@@ -105,8 +105,6 @@ class _TextFieldItemState extends ConsumerState<TextFieldItem> {
           return;
       }
       notifier.updateValue(_path, defaultValue);
-      // After state update, widget will rebuild as enabled.
-      // Request focus to allow immediate editing.
       _focusNode.requestFocus();
     }
   }
@@ -128,7 +126,7 @@ class _TextFieldItemState extends ConsumerState<TextFieldItem> {
     }
 
     if (!shouldUpdate) {
-      _controller.text = _initialValueFromProvider; // Revert if cancelled
+      _controller.text = _initialValueFromProvider;
       return;
     }
 
@@ -166,7 +164,6 @@ class _TextFieldItemState extends ConsumerState<TextFieldItem> {
 
   @override
   Widget build(BuildContext context) {
-    // Re-sync controller if external data changes and field is not focused
     final currentValue = ref.watch(saveDataProvider.select((s) => s.data != null
         ? ref.read(saveDataProvider.notifier).getValue(_path, '')
         : ''));
@@ -218,7 +215,7 @@ class _TextFieldItemState extends ConsumerState<TextFieldItem> {
             ),
             if (widget.item.description != null)
               Padding(
-                padding: const EdgeInsets.only(top: 8.0, left: 12.0),
+                padding: const EdgeInsets.only(top: 6.0, left: 8.0, right: 8.0),
                 child: Text(
                   widget.item.description!,
                   style: Theme.of(context).textTheme.bodySmall,

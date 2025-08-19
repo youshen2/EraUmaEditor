@@ -146,7 +146,7 @@ class DropdownItem extends ConsumerWidget {
             ),
             if (item.description != null)
               Padding(
-                padding: const EdgeInsets.only(top: 8.0, left: 12.0),
+                padding: const EdgeInsets.only(top: 6.0, left: 8.0, right: 8.0),
                 child: Text(
                   item.description!,
                   style: Theme.of(context).textTheme.bodySmall,
