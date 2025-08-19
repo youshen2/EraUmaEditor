@@ -107,11 +107,11 @@ class DropdownItem extends ConsumerWidget {
       }
     }
 
-    return GestureDetector(
-      onTap: !isEnabled ? () => _showForceModifyDialog(context, ref) : null,
-      child: IgnorePointer(
-        ignoring: !isEnabled,
-        child: Column(
+    final bool isEffectivelyDisabled = !isEnabled || !isValueInChoices;
+
+    return Stack(
+      children: [
+        Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             DropdownButtonFormField<EditorChoice>(
@@ -131,7 +131,6 @@ class DropdownItem extends ConsumerWidget {
                   horizontal: 12,
                   vertical: 16,
                 ),
-                enabled: isEnabled,
               ),
               isExpanded: true,
               items: item.choices?.map((EditorChoice choice) {
@@ -140,7 +139,7 @@ class DropdownItem extends ConsumerWidget {
                   child: Text(choice.displayName),
                 );
               }).toList(),
-              onChanged: isEnabled && isValueInChoices
+              onChanged: !isEffectivelyDisabled
                   ? (EditorChoice? newValue) =>
                       _onChanged(newValue, context, ref)
                   : null,
@@ -155,7 +154,16 @@ class DropdownItem extends ConsumerWidget {
               ),
           ],
         ),
-      ),
+        if (isEffectivelyDisabled)
+          Positioned.fill(
+            child: GestureDetector(
+              onTap: () => _showForceModifyDialog(context, ref),
+              child: Container(
+                color: Colors.transparent,
+              ),
+            ),
+          ),
+      ],
     );
   }
 }
