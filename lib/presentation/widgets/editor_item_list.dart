@@ -27,6 +27,7 @@ class EditorItemList extends ConsumerStatefulWidget {
 
 class _EditorItemListState extends ConsumerState<EditorItemList> {
   late final ScrollController _scrollController;
+  final Map<String, bool> _collapsedStates = {};
 
   @override
   void initState() {
@@ -102,14 +103,41 @@ class _EditorItemListState extends ConsumerState<EditorItemList> {
       final currentItem = visibleItems[i];
 
       if (currentItem.dataType == DataType.header) {
-        widgets.add(HeaderItem(item: currentItem));
+        final isCollapsed = _collapsedStates[currentItem.label] ?? false;
+        widgets.add(HeaderItem(
+          item: currentItem,
+          isCollapsed: isCollapsed,
+          onTap: () {
+            setState(() {
+              _collapsedStates[currentItem.label] = !isCollapsed;
+            });
+          },
+        ));
+
+        if (isCollapsed) {
+          int nextHeaderIndex = -1;
+          for (int j = i + 1; j < visibleItems.length; j++) {
+            if (visibleItems[j].dataType == DataType.header) {
+              nextHeaderIndex = j;
+              break;
+            }
+          }
+          if (nextHeaderIndex != -1) {
+            i = nextHeaderIndex - 1;
+          } else {
+            i = visibleItems.length;
+          }
+        }
         continue;
       }
+
+      final padding = EdgeInsets.symmetric(
+          vertical: currentItem.description != null ? 8.0 : 6.0);
 
       if (currentItem.layoutType == LayoutType.single) {
         widgets.add(
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4.0),
+            padding: padding,
             child: _buildSingleWidget(currentItem, saveData),
           ),
         );
@@ -127,7 +155,7 @@ class _EditorItemListState extends ConsumerState<EditorItemList> {
 
         widgets.add(
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4.0),
+            padding: padding,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
