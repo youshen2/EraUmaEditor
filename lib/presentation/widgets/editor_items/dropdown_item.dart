@@ -109,13 +109,21 @@ class DropdownItem extends ConsumerWidget {
 
     return GestureDetector(
       onTap: !isEnabled ? () => _showForceModifyDialog(context, ref) : null,
-      child: AbsorbPointer(
-        absorbing: !isEnabled,
+      child: IgnorePointer(
+        ignoring: !isEnabled,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             DropdownButtonFormField<EditorChoice>(
               value: selectedChoice,
+              hint: !isEnabled
+                  ? const Text('N/A')
+                  : !isValueInChoices
+                      ? Text(
+                          '无效值: $currentValue',
+                          overflow: TextOverflow.ellipsis,
+                        )
+                      : null,
               decoration: InputDecoration(
                 labelText: item.label,
                 border: const OutlineInputBorder(),
@@ -123,13 +131,9 @@ class DropdownItem extends ConsumerWidget {
                   horizontal: 12,
                   vertical: 16,
                 ),
-                hintText: !isEnabled
-                    ? 'N/A'
-                    // Show a hint if the value is invalid
-                    : !isValueInChoices
-                        ? '无效值: $currentValue'
-                        : null,
+                enabled: isEnabled,
               ),
+              isExpanded: true,
               items: item.choices?.map((EditorChoice choice) {
                 return DropdownMenuItem<EditorChoice>(
                   value: choice,
