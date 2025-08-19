@@ -69,6 +69,48 @@ class _TextFieldItemState extends ConsumerState<TextFieldItem> {
     return result ?? false;
   }
 
+  Future<void> _showForceModifyDialog() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('强制修改'),
+        content: const Text('此项在存档中不存在或无效。\n是否要强制进行修改？'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('取消'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('确认'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true) {
+      final notifier = ref.read(saveDataProvider.notifier);
+      dynamic defaultValue;
+      switch (widget.item.dataType) {
+        case DataType.int:
+          defaultValue = 0;
+          break;
+        case DataType.float:
+          defaultValue = 0.0;
+          break;
+        case DataType.string:
+          defaultValue = '';
+          break;
+        default:
+          return;
+      }
+      notifier.updateValue(_path, defaultValue);
+      // After state update, widget will rebuild as enabled.
+      // Request focus to allow immediate editing.
+      _focusNode.requestFocus();
+    }
+  }
+
   Future<void> _saveChanges() async {
     if (!widget.isEnabled) return;
 
@@ -139,42 +181,52 @@ class _TextFieldItemState extends ConsumerState<TextFieldItem> {
       _controller.text = '无效';
     }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        TextFormField(
-          controller: _controller,
-          focusNode: _focusNode,
-          enabled: widget.isEnabled,
-          decoration: InputDecoration(
-            labelText: widget.item.label,
-            border: const OutlineInputBorder(),
-            prefixText: widget.item.prefix,
-            suffixText: widget.item.suffix,
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-          ),
-          keyboardType: (widget.item.dataType == DataType.int ||
-                  widget.item.dataType == DataType.float)
-              ? TextInputType.numberWithOptions(
-                  decimal: widget.item.dataType == DataType.float, signed: true)
-              : TextInputType.text,
-          inputFormatters: (widget.item.dataType == DataType.int)
-              ? [FilteringTextInputFormatter.allow(RegExp(r'^-?\d*'))]
-              : (widget.item.dataType == DataType.float
-                  ? [FilteringTextInputFormatter.allow(RegExp(r'^-?\d*\.?\d*'))]
-                  : []),
-          onFieldSubmitted: (_) => _saveChanges(),
-        ),
-        if (widget.item.description != null)
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0, left: 12.0),
-            child: Text(
-              widget.item.description!,
-              style: Theme.of(context).textTheme.bodySmall,
+    return GestureDetector(
+      onTap: !widget.isEnabled ? _showForceModifyDialog : null,
+      child: AbsorbPointer(
+        absorbing: !widget.isEnabled,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextFormField(
+              controller: _controller,
+              focusNode: _focusNode,
+              enabled: widget.isEnabled,
+              decoration: InputDecoration(
+                labelText: widget.item.label,
+                border: const OutlineInputBorder(),
+                prefixText: widget.item.prefix,
+                suffixText: widget.item.suffix,
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+              ),
+              keyboardType: (widget.item.dataType == DataType.int ||
+                      widget.item.dataType == DataType.float)
+                  ? TextInputType.numberWithOptions(
+                      decimal: widget.item.dataType == DataType.float,
+                      signed: true)
+                  : TextInputType.text,
+              inputFormatters: (widget.item.dataType == DataType.int)
+                  ? [FilteringTextInputFormatter.allow(RegExp(r'^-?\d*'))]
+                  : (widget.item.dataType == DataType.float
+                      ? [
+                          FilteringTextInputFormatter.allow(
+                              RegExp(r'^-?\d*\.?\d*'))
+                        ]
+                      : []),
+              onFieldSubmitted: (_) => _saveChanges(),
             ),
-          ),
-      ],
+            if (widget.item.description != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0, left: 12.0),
+                child: Text(
+                  widget.item.description!,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -39,6 +39,37 @@ class CheckboxItem extends ConsumerWidget {
     return result ?? false;
   }
 
+  Future<void> _showForceModifyDialog(
+      BuildContext context, WidgetRef ref) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('强制修改'),
+        content: const Text('此项在存档中不存在或无效。\n是否要强制进行修改？'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('取消'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('确认'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true) {
+      final notifier = ref.read(saveDataProvider.notifier);
+      final path = item.jsonPath.replaceAll('{id}', characterId.toString());
+      final defaultValue =
+          item.booleanRepresentation == BooleanRepresentation.asBoolean
+              ? false
+              : 0;
+      notifier.updateValue(path, defaultValue);
+    }
+  }
+
   Future<void> _onChanged(
       bool value, BuildContext context, WidgetRef ref) async {
     final notifier = ref.read(saveDataProvider.notifier);
@@ -79,20 +110,27 @@ class CheckboxItem extends ConsumerWidget {
         ? currentValue
         : (currentValue is num && currentValue == 1);
 
-    return Card(
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(
-            color: Theme.of(context).colorScheme.outlineVariant, width: 1),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      margin: EdgeInsets.zero,
-      child: SwitchListTile(
-        title: Text(item.label),
-        subtitle: item.description != null ? Text(item.description!) : null,
-        value: isChecked,
-        onChanged:
-            isEnabled ? (bool value) => _onChanged(value, context, ref) : null,
+    return GestureDetector(
+      onTap: !isEnabled ? () => _showForceModifyDialog(context, ref) : null,
+      child: AbsorbPointer(
+        absorbing: !isEnabled,
+        child: Card(
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+                color: Theme.of(context).colorScheme.outlineVariant, width: 1),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          margin: EdgeInsets.zero,
+          child: SwitchListTile(
+            title: Text(item.label),
+            subtitle: item.description != null ? Text(item.description!) : null,
+            value: isChecked,
+            onChanged: isEnabled
+                ? (bool value) => _onChanged(value, context, ref)
+                : null,
+          ),
+        ),
       ),
     );
   }
