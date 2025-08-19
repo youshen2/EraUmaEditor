@@ -88,7 +88,8 @@ class SaveDataNotifier extends StateNotifier<SaveDataState> {
 
     state = state.copyWith(isLoading: true, clearError: true);
     try {
-      final content = jsonEncode(state.data);
+      const encoder = JsonEncoder.withIndent('  ');
+      final content = encoder.convert(state.data!);
       String? outputFile;
       String? outputFileName;
 
