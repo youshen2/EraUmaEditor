@@ -455,9 +455,9 @@ class _AttrPageState extends ConsumerState<AttrPage> {
             );
           }
           if (int.tryParse(key) == 26) {
-            allPossibleItems.add(EditorItem.header('床技相关'));
+            allPossibleItems.add(EditorItem.header('床技相关状态'));
           } else if (int.tryParse(key) == 42) {
-            allPossibleItems.add(EditorItem.header('角色专属'));
+            allPossibleItems.add(EditorItem.header('角色专属状态'));
           }
         }
       }
