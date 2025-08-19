@@ -111,7 +111,7 @@ class _AboutPageState extends ConsumerState<AboutPage>
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          'Version 1.1.1 (Flutter)',
+                          'Version 1.2.0 (Flutter)',
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ],
