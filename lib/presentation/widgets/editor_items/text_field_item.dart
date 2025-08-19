@@ -215,7 +215,7 @@ class _TextFieldItemState extends ConsumerState<TextFieldItem> {
             ),
             if (widget.item.description != null)
               Padding(
-                padding: const EdgeInsets.only(top: 6.0, left: 8.0, right: 8.0),
+                padding: const EdgeInsets.only(top: 1.0, left: 8.0, right: 8.0),
                 child: Text(
                   widget.item.description!,
                   style: Theme.of(context).textTheme.bodySmall,

@@ -35,7 +35,7 @@ echo   2) Android (APK per ABI + AppBundle)
 echo   3) Windows (x64)
 echo   4) Web
 echo   5) Linux (x64) - Requires Linux Host
-echo   6) macOS (x64 & arm64) - Requires macOS Host
+echo   6) macOS (x64 and arm64) - Requires macOS Host
 echo   7) iOS - Requires macOS Host
 echo.
 set /p "choices=Enter numbers to build, separated by spaces (e.g., 2 3 4): "

@@ -67,7 +67,7 @@ class _EditorItemListState extends ConsumerState<EditorItemList> {
 
     if (widget.asSliver) {
       return SliverPadding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
         sliver: SliverList(
           delegate: SliverChildBuilderDelegate(
             (context, index) => widgets[index],
@@ -80,7 +80,7 @@ class _EditorItemListState extends ConsumerState<EditorItemList> {
         controller: _scrollController,
         child: ListView.builder(
           controller: _scrollController,
-          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
           itemCount: widgets.length,
           itemBuilder: (context, index) {
             return widgets[index];
