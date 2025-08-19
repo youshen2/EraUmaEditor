@@ -84,7 +84,7 @@ class _CallnamePageState extends ConsumerState<CallnamePage> {
           controller: _scrollController,
           child: ListView.builder(
             controller: _scrollController,
-            padding: const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 80.0),
+            padding: const EdgeInsets.fromLTRB(16.0, 8.0, 8.0, 80.0),
             itemCount: callnameEntries.length,
             itemBuilder: (context, index) {
               final entry = callnameEntries[index];
@@ -101,58 +101,56 @@ class _CallnamePageState extends ConsumerState<CallnamePage> {
               final bool isEnabled =
                   JsonHelper.keyExists(saveData, path.replaceAll('/', '/'));
 
-              return Card(
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(
-                      color: Theme.of(context).colorScheme.outlineVariant,
-                      width: 1),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                margin: const EdgeInsets.symmetric(vertical: 4.0),
+              return Padding(
+                key: ValueKey(targetId),
+                padding: const EdgeInsets.symmetric(vertical: 6.0),
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
-                        child: TextFieldItem(
-                          item: item,
-                          characterId: charId,
-                          isEnabled: isEnabled,
-                        ),
+                      child: TextFieldItem(
+                        item: item,
+                        characterId: charId,
+                        isEnabled: isEnabled,
                       ),
                     ),
-                    IconButton(
-                      icon: const Icon(Icons.delete_outline,
-                          color: Colors.redAccent),
-                      tooltip: '删除此称呼',
-                      onPressed: !isEnabled
-                          ? null
-                          : () {
-                              showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                  title: const Text('确认删除'),
-                                  content: Text('确定要删除对 $targetName 的称呼吗？'),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.of(context).pop(),
-                                      child: const Text('取消'),
-                                    ),
-                                    TextButton(
-                                      style: TextButton.styleFrom(
-                                          foregroundColor: Colors.red),
-                                      onPressed: () {
-                                        notifier.removeValue(path);
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: const Text('删除'),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
+                    const SizedBox(width: 4),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4.0),
+                      child: IconButton(
+                        icon: const Icon(Icons.delete_outline),
+                        color: Theme.of(context).colorScheme.error,
+                        tooltip: '删除此称呼',
+                        onPressed: !isEnabled
+                            ? null
+                            : () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: const Text('确认删除'),
+                                    content: Text('确定要删除对 $targetName 的称呼吗？'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(),
+                                        child: const Text('取消'),
+                                      ),
+                                      TextButton(
+                                        style: TextButton.styleFrom(
+                                            foregroundColor: Theme.of(context)
+                                                .colorScheme
+                                                .error),
+                                        onPressed: () {
+                                          notifier.removeValue(path);
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text('删除'),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                      ),
                     ),
                   ],
                 ),
@@ -192,7 +190,30 @@ class _AddCallnameDialogState extends ConsumerState<_AddCallnameDialog> {
   void initState() {
     super.initState();
     final saveData = ref.read(saveDataProvider).data;
-    _characterList = _getAllCharacters(saveData);
+    _characterList = _getAvailableCharacters(saveData);
+  }
+
+  List<CharacterItem> _getAvailableCharacters(Map<String, dynamic>? data) {
+    if (data == null) return [];
+
+    final allCharacters = _getAllCharacters(data);
+
+    Set<String> existingTargetIds = {};
+    try {
+      final currentCharacterCallnames = data['callname']
+          ?[widget.currentCharId.toString()] as Map<String, dynamic>?;
+      if (currentCharacterCallnames != null) {
+        existingTargetIds = currentCharacterCallnames.keys.toSet();
+      }
+    } catch (e) {
+      // NULL
+    }
+
+    existingTargetIds.add(widget.currentCharId.toString());
+
+    return allCharacters
+        .where((char) => !existingTargetIds.contains(char.id))
+        .toList();
   }
 
   List<CharacterItem> _getAllCharacters(Map<String, dynamic>? data) {
