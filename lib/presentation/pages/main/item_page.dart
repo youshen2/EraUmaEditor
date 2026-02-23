@@ -14,7 +14,10 @@ class ItemPage extends ConsumerWidget {
     final List<EditorItem> items = [];
     try {
       final itemHold = data['item']['hold'] as Map<String, dynamic>;
-      final sortedKeys = itemHold.keys.toList()
+      final allKeysSet = <String>{}
+        ..addAll(itemHold.keys)
+        ..addAll(Constants.ITEM_MAP.keys);
+      final sortedKeys = allKeysSet.toList()
         ..sort((a, b) => int.parse(a).compareTo(int.parse(b)));
 
       items.add(EditorItem.header('速子的小卖部'));
@@ -42,6 +45,8 @@ class ItemPage extends ConsumerWidget {
           items.add(EditorItem.header('不贩卖的特殊道具(麦吉罗的呼唤)'));
         } else if (int.tryParse(key) == 111) {
           items.add(EditorItem.header('不贩卖的特殊道具(特殊载具)'));
+        } else if (int.tryParse(key) == 114) {
+          items.add(EditorItem.header('Bug 修复器'));
         }
       }
     } catch (e) {

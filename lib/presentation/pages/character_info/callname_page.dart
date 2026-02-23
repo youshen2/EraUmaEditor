@@ -78,6 +78,16 @@ class _CallnamePageState extends ConsumerState<CallnamePage> {
       );
     }
 
+    final selfNamePath = 'callname/$charId/-1';
+    final selfNameItem = EditorItem(
+      label: '角色名称',
+      jsonPath: selfNamePath,
+      dataType: DataType.string,
+      warningMessage: '修改角色名称可能在游戏中无效或被游戏逻辑覆盖，请谨慎使用。',
+    );
+    final bool selfNameEnabled =
+        JsonHelper.keyExists(saveData, selfNamePath.replaceAll('/', '/'));
+
     return Stack(
       children: [
         Scrollbar(
@@ -85,9 +95,21 @@ class _CallnamePageState extends ConsumerState<CallnamePage> {
           child: ListView.builder(
             controller: _scrollController,
             padding: const EdgeInsets.fromLTRB(16.0, 8.0, 8.0, 80.0),
-            itemCount: callnameEntries.length,
+            itemCount: callnameEntries.length + 1,
             itemBuilder: (context, index) {
-              final entry = callnameEntries[index];
+              if (index == 0) {
+                return Padding(
+                  key: const ValueKey('self-name'),
+                  padding: const EdgeInsets.symmetric(vertical: 6.0),
+                  child: TextFieldItem(
+                    item: selfNameItem,
+                    characterId: charId,
+                    isEnabled: selfNameEnabled,
+                  ),
+                );
+              }
+
+              final entry = callnameEntries[index - 1];
               final targetId = entry.key;
               final targetName = entry.value;
               final path = 'callname/$charId/$targetId';

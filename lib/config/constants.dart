@@ -114,6 +114,7 @@ class Constants {
     '111': '「亏欠」',
     '112': '小金船号',
     '113': '善信号',
+    '114': '现实透孔仪',
   };
 
   static const Map<String, String> EXP_MAP = {
