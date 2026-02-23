@@ -195,23 +195,43 @@ class _EditorItemListState extends ConsumerState<EditorItemList> {
         item.jsonPath.replaceAll('{id}', widget.characterId.toString());
     final bool isEnabled =
         item.jsonPath.isEmpty || JsonHelper.keyExists(saveData, path);
+    final itemKey = ValueKey(
+        '${widget.characterId}-${item.jsonPath}-${item.label}-${item.dataType}');
 
     switch (item.dataType) {
       case DataType.int:
       case DataType.float:
       case DataType.string:
         return TextFieldItem(
-            item: item, characterId: widget.characterId, isEnabled: isEnabled);
+          key: itemKey,
+          item: item,
+          characterId: widget.characterId,
+          isEnabled: isEnabled,
+        );
       case DataType.boolean:
         return CheckboxItem(
-            item: item, characterId: widget.characterId, isEnabled: isEnabled);
+          key: itemKey,
+          item: item,
+          characterId: widget.characterId,
+          isEnabled: isEnabled,
+        );
       case DataType.choice:
         return DropdownItem(
-            item: item, characterId: widget.characterId, isEnabled: isEnabled);
+          key: itemKey,
+          item: item,
+          characterId: widget.characterId,
+          isEnabled: isEnabled,
+        );
       case DataType.header:
-        return HeaderItem(item: item);
+        return HeaderItem(
+          key: itemKey,
+          item: item,
+        );
       case DataType.info:
-        return InfoItem(item: item);
+        return InfoItem(
+          key: itemKey,
+          item: item,
+        );
     }
   }
 }
